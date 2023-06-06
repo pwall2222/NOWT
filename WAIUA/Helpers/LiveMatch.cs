@@ -904,28 +904,21 @@ public class LiveMatch
         return seasonData;
     }
 
-
     private static async Task<Uri> TrackerAsync(string username)
     {
+        if (!string.IsNullOrEmpty(username)) return null;
         try
         {
-            if (!string.IsNullOrEmpty(username))
-            {
-                var encodedUsername = Uri.EscapeDataString(username);
-                var url = new Uri("https://tracker.gg/valorant/profile/riot/" + encodedUsername);
-                var response = await DoCachedRequestAsync(Method.Get,
-                    url.ToString(),
-                    false).ConfigureAwait(false);
-                var numericStatusCode = (short)response.StatusCode;
-
-                if (numericStatusCode == 200) return url;
-            }
+            var encodedUsername = Uri.EscapeDataString(username);
+            var url = new Uri("https://tracker.gg/valorant/profile/riot/" + encodedUsername);
+            var response = await DoCachedRequestAsync(Method.Get, url.ToString(), false).ConfigureAwait(false);
+            var numericStatusCode = (short)response.StatusCode;
+            if (numericStatusCode == 200) return url;
         }
         catch (Exception e)
         {
             Constants.Log.Error("TrackerAsync Failed: {Exception}", e);
         }
-
         return null;
     }
 
