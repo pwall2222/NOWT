@@ -286,7 +286,7 @@ public class LiveMatch
         }
         catch (Exception e)
         {
-            Constants.Log.Error("LiveMatchOutputAsync() party colour  failed: {e}", e);
+            Constants.Log.Error("LiveMatchOutputAsync() party colour failed: {e}", e);
         }
 
         return playerList;
