@@ -349,26 +349,24 @@ public class LiveMatch
     private static async Task<IgnData> GetIgcUsernameAsync(Guid puuid, bool isIncognito, Guid partyId)
     {
         IgnData ignData = new();
+        ignData.TrackerEnabled = Visibility.Hidden;
+        ignData.TrackerDisabled = Visibility.Visible;
+
         if (isIncognito && partyId != Constants.PPartyId)
         {
             ignData.Username = "----";
-            ignData.TrackerEnabled = Visibility.Hidden;
-            ignData.TrackerDisabled = Visibility.Visible;
+            return ignData;
         }
-        else
-        {
-            ignData.Username = await GetNameServiceGetUsernameAsync(puuid).ConfigureAwait(false);
-            var trackerUri = await TrackerAsync(ignData.Username).ConfigureAwait(false);
-            if (trackerUri != null)
-                return new IgnData
-                {
-                    TrackerEnabled = Visibility.Visible,
-                    TrackerDisabled = Visibility.Collapsed,
-                    TrackerUri = trackerUri,
-                    Username = ignData.Username + " 🔗"
-                };
-            ignData.TrackerEnabled = Visibility.Hidden;
-            ignData.TrackerDisabled = Visibility.Visible;
+
+        ignData.Username = await GetNameServiceGetUsernameAsync(puuid).ConfigureAwait(false);
+
+        var trackerUri = await TrackerAsync(ignData.Username).ConfigureAwait(false);
+
+        if (trackerUri != null) {
+            ignData.TrackerEnabled = Visibility.Visible;
+            ignData.TrackerDisabled = Visibility.Collapsed;
+            ignData.TrackerUri = trackerUri;
+            ignData.Username = ignData.Username + " 🔗";
         }
 
         return ignData;
