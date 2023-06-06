@@ -79,6 +79,16 @@ public static class Login
         }
     }
 
+    public static void AddAuthToRequest(RestRequest request)
+    {
+        string client = "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9";
+
+        request.AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken);
+        request.AddHeader("Authorization", $"Bearer {Constants.AccessToken}");
+        request.AddHeader("X-Riot-ClientPlatform", client);
+        request.AddHeader("X-Riot-ClientVersion", Constants.Version);
+    }
+
     public static async Task<string> GetNameServiceGetUsernameAsync(Guid puuid)
     {
         if (puuid == Guid.Empty) return null;
@@ -91,6 +101,8 @@ public static class Login
         {
             RequestFormat = DataFormat.Json
         };
+
+        AddAuthToRequest(request);
 
         string[] body = {puuid.ToString()};
         request.AddJsonBody(body);
@@ -130,11 +142,7 @@ public static class Login
         var request = new RestRequest();
         if (addRiotAuth)
         {
-            request.AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken);
-            request.AddHeader("Authorization", $"Bearer {Constants.AccessToken}");
-            request.AddHeader("X-Riot-ClientPlatform",
-                "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9");
-            request.AddHeader("X-Riot-ClientVersion", Constants.Version);
+            AddAuthToRequest(request);
         }
 
         var response = await client.ExecuteAsync(request, method).ConfigureAwait(false);
