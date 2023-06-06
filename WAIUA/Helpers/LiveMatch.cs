@@ -292,50 +292,54 @@ public class LiveMatch
         return playerList;
     }
 
+    private async Task<Player> GetPartyPlayerInfo(Member riotPlayer, sbyte index, SeasonData seasonData)
+    {
+        Player player = new();
+
+        var cardTask = GetCardAsync(riotPlayer.PlayerIdentity.PlayerCardId, index);
+        var historyTask = GetMatchHistoryAsync(riotPlayer.Subject);
+        var playerTask = GetPlayerHistoryAsync(riotPlayer.Subject, seasonData);
+
+        await Task.WhenAll(cardTask, historyTask, playerTask).ConfigureAwait(false);
+
+        player.IdentityData = cardTask.Result;
+        player.MatchHistoryData = historyTask.Result;
+        player.RankData = playerTask.Result;
+        player.PlayerUiData = new PlayerUIData
+        {
+            BackgroundColour = "#252A40",
+            PartyUuid = Partyid,
+            PartyColour = "Transparent",
+            Puuid = riotPlayer.PlayerIdentity.Subject
+        };
+        player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, false, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
+        player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
+        player.TeamId = "Blue";
+        player.Active = Visibility.Visible;
+        return player;
+    }
+
+    private async Task GetPartyPlayers(PartyResponse partyInfo, List<Task<Player>> playerTasks)
+    {
+        if (partyInfo == null) return;
+
+        var seasonData = await GetSeasonsAsync().ConfigureAwait(false);
+        sbyte index = 0;
+
+        foreach (var riotPlayer in partyInfo.Members)
+        {
+            playerTasks.Add(GetPartyPlayerInfo(riotPlayer, index, seasonData));
+            index++;
+        }
+    }
+
     public async Task<List<Player>> PartyOutputAsync()
     {
         var playerList = new List<Player>();
         var playerTasks = new List<Task<Player>>();
         var partyInfo = await GetPartyDetailsAsync().ConfigureAwait(false);
 
-        if (partyInfo != null)
-        {
-            var seasonData = await GetSeasonsAsync().ConfigureAwait(false);
-            sbyte index = 0;
-
-            foreach (var riotPlayer in partyInfo.Members)
-            {
-                async Task<Player> GetPlayerInfo()
-                {
-                    Player player = new();
-
-                    var t1 = GetCardAsync(riotPlayer.PlayerIdentity.PlayerCardId, index);
-                    var t3 = GetMatchHistoryAsync(riotPlayer.Subject);
-                    var t4 = GetPlayerHistoryAsync(riotPlayer.Subject, seasonData);
-
-                    await Task.WhenAll(t1, t3, t4).ConfigureAwait(false);
-
-                    player.IdentityData = t1.Result;
-                    player.MatchHistoryData = t3.Result;
-                    player.RankData = t4.Result;
-                    player.PlayerUiData = new PlayerUIData
-                    {
-                        BackgroundColour = "#252A40",
-                        PartyUuid = Partyid,
-                        PartyColour = "Transparent",
-                        Puuid = riotPlayer.PlayerIdentity.Subject
-                    };
-                    player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, false, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
-                    player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
-                    player.TeamId = "Blue";
-                    player.Active = Visibility.Visible;
-                    return player;
-                }
-
-                playerTasks.Add(GetPlayerInfo());
-                index++;
-            }
-        }
+        await GetPartyPlayers(partyInfo, playerTasks);
 
         playerList.AddRange(await Task.WhenAll(playerTasks).ConfigureAwait(false));
 
