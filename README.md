@@ -1,9 +1,3 @@
-> :warning: **Start Announcement**
->
-# WAIUA has left active development. It won't stop working immediately, as WAIUA is completely standalone and communicates directly with Riot Servers. However, like it has happened before, changes to Riot's architecture will eventually break WAIUA's functionality. Full story on my Discord server
->
-> :warning: **End Announcement**
-
 <p align="center">
   <a href="https://github.com/Soneliem/WAIUA">
     <img src="Screenshots/logo.png" alt="Logo" width="80" height="80">
@@ -138,15 +132,6 @@ Thank you for your support! Any donation of $5 and over will get you into the ap
 ## Translations
 
 WAIUA Supports full localization and instructions to help with translations can be found in [Localization](https://github.com/Soneliem/WAIUA/blob/master/Localization.md)
-
-## Contact
-
-**Official Website:** [waiua.sonel.dev](https://waiua.sonel.dev)  
-**Discord:** Soneliem#4194  
-**Email:** [waiua@sonel.dev](mailto:waiua@sonel.dev)  
-**Project Link:** [https://github.com/Soneliem/WAIUA](https://github.com/Soneliem/WAIUA)  
-**Discord Server:**  
-[![Discord Banner 2](https://discordapp.com/api/guilds/881790284613185546/widget.png?style=banner2)](https://discord.gg/X7CYCeZSRK)  
 
 ## Acknowledgements
 
