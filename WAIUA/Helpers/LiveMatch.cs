@@ -720,25 +720,18 @@ public class LiveMatch
         var seasonData = new Guid[4];
         try
         {
-            RestClient client = new($"https://shared.{Constants.Region}.a.pvp.net/content-service/v3/content");
-            var request = new RestRequest().AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken)
-                .AddHeader("Authorization", $"Bearer {Constants.AccessToken}")
-                .AddHeader("X-Riot-ClientPlatform", Constants.Platform)
-                .AddHeader("X-Riot-ClientVersion", Constants.Version);
-            client.UseSystemTextJson(new JsonSerializerOptions
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-            });
-            var response = await client.ExecuteGetAsync<ContentResponse>(request).ConfigureAwait(false);
-
+            var response = await DoCachedRequestAsync(Method.Get, $"https://shared.{Constants.Region}.a.pvp.net/content-service/v3/content", true);
+            
             if (!response.IsSuccessful)
             {
                 Constants.Log.Error("GetSeasonsAsync Failed: {e}", response.ErrorException);
                 return seasonData;
             }
-            
+
+            var data = JsonSerializer.Deserialize<ContentResponse>(response.Content);
+
             sbyte index = 0;
-            var seasons = response.Data.Seasons.Reverse();
+            var seasons = data.Seasons.Reverse();
             var acts = seasons.Where(season => season.Type == "act");
 
             foreach (var act in acts)
