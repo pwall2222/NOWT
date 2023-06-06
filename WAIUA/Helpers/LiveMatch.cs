@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -634,193 +634,82 @@ public class LiveMatch
     private static async Task<RankData> GetPlayerHistoryAsync(Guid puuid, Guid[] seasonData)
     {
         var rankData = new RankData();
-        if (puuid != Guid.Empty)
-        {
-            var response = await DoCachedRequestAsync(Method.Get,
-                $"https://pd.{Constants.Region}.a.pvp.net/mmr/v1/players/{puuid}",
-                true).ConfigureAwait(false);
-
-            if (!response.IsSuccessful && response.Content != null)
-            {
-                Constants.Log.Error("GetPlayerHistoryAsync Failed: {e}", response.ErrorException);
-                return rankData;
-            }
-
-            var options = new JsonSerializerOptions
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-            };
-            var content = JsonSerializer.Deserialize<MmrResponse>(response.Content, options);
-            int rank, prank, pprank, ppprank;
-            try
-            {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[0].ToString(), out var currentActJsonElement))
-                {
-                    var currentAct = currentActJsonElement.Deserialize<ActInfo>();
-                    rank = currentAct.CompetitiveTier;
-
-                    if (rank is 1 or 2) rank = 0;
-                }
-                else
-                {
-                    rank = 0;
-                }
-            }
-            catch (Exception)
-            {
-                rank = 0;
-            }
-
-            try
-            {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[1].ToString(), out var pActJsonElement))
-                {
-                    var PAct = pActJsonElement.Deserialize<ActInfo>();
-                    switch (PAct.CompetitiveTier)
-                    {
-                        case 1 or 2:
-                            prank = 0;
-                            break;
-                        case > 20:
-                        {
-                            if (Constants.BeforeAscendantSeasons.Contains(seasonData[1]))
-                                prank = PAct.CompetitiveTier + 3;
-                            else
-                                prank = PAct.CompetitiveTier;
-                            break;
-                        }
-                        default:
-                            prank = PAct.CompetitiveTier;
-                            break;
-                    }
-                }
-                else
-                {
-                    prank = 0;
-                }
-            }
-            catch (Exception)
-            {
-                prank = 0;
-            }
-
-            try
-            {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[2].ToString(), out var ppActJsonElement))
-                {
-                    var PPAct = ppActJsonElement.Deserialize<ActInfo>();
-                    switch (PPAct.CompetitiveTier)
-                    {
-                        case 1 or 2:
-                            pprank = 0;
-                            break;
-                        case > 20:
-                        {
-                            if (Constants.BeforeAscendantSeasons.Contains(seasonData[2]))
-                                pprank = PPAct.CompetitiveTier + 3;
-                            else
-                                pprank = PPAct.CompetitiveTier;
-                            break;
-                        }
-                        default:
-                            pprank = PPAct.CompetitiveTier;
-                            break;
-                    }
-                }
-                else
-                {
-                    pprank = 0;
-                }
-            }
-            catch (Exception)
-            {
-                pprank = 0;
-            }
-
-            try
-            {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[3].ToString(), out var pppActJsonElement))
-                {
-                    var PPPAct = pppActJsonElement.Deserialize<ActInfo>();
-                    switch (PPPAct.CompetitiveTier)
-                    {
-                        case 1 or 2:
-                            ppprank = 0;
-                            break;
-                        case > 20:
-                        {
-                            if (Constants.BeforeAscendantSeasons.Contains(seasonData[3]))
-                                ppprank = PPPAct.CompetitiveTier + 3;
-                            else
-                                ppprank = PPPAct.CompetitiveTier;
-                            break;
-                        }
-                        default:
-                            ppprank = PPPAct.CompetitiveTier;
-                            break;
-                    }
-                }
-                else
-                {
-                    ppprank = 0;
-                }
-            }
-            catch (Exception)
-            {
-                ppprank = 0;
-            }
-
-            if (rank >= 24)
-            {
-                var leaderboardResponse = await DoCachedRequestAsync(Method.Get,
-                    $"https://pd.{Constants.Shard}.a.pvp.net/mmr/v1/leaderboards/affinity/{Constants.Region}/queue/competitive/season/{seasonData[0]}?startIndex=0&size=0",
-                    true).ConfigureAwait(false);
-                if (leaderboardResponse.Content != null && leaderboardResponse.IsSuccessful)
-                {
-                    var leaderboardcontent = JsonSerializer.Deserialize<LeaderboardsResponse>(leaderboardResponse.Content);
-                    try
-                    {
-                        rankData.MaxRr = leaderboardcontent.TierDetails[rank.ToString()].RankedRatingThreshold;
-                    }
-                    catch (Exception e)
-                    {
-                        Constants.Log.Error("GetPlayerHistoryAsync Failed; leaderboardcontent error: {e}", e);
-                    }
-                }
-                else
-                {
-                    Constants.Log.Error("GetPlayerHistoryAsync Failed; leaderboardResponse error: {e}", leaderboardResponse.ErrorException);
-                }
-            }
-
-            try
-            {
-                var ranks = JsonSerializer.Deserialize<Dictionary<int, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\competitivetiers.txt").ConfigureAwait(false));
-
-                ranks.TryGetValue(rank, out var rank0);
-                rankData.RankImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\ranksimg\\{rank}.png");
-                rankData.RankName = rank0;
-
-                ranks.TryGetValue(prank, out var rank1);
-                rankData.PreviousrankImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\ranksimg\\{prank}.png");
-                rankData.PreviousrankName = rank1;
-
-                ranks.TryGetValue(pprank, out var rank2);
-                rankData.PreviouspreviousrankImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\ranksimg\\{pprank}.png");
-                rankData.PreviouspreviousrankName = rank2;
-
-                ranks.TryGetValue(ppprank, out var rank3);
-                rankData.PreviouspreviouspreviousrankImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\ranksimg\\{ppprank}.png");
-                rankData.PreviouspreviouspreviousrankName = rank3;
-            }
-            catch (Exception e)
-            {
-                Constants.Log.Error("GetPlayerHistoryAsync Failed; rank dictionary error: {e}", e);
-            }
-        }
-        else
+        if (puuid == Guid.Empty)
         {
             Constants.Log.Error("GetPlayerHistoryAsync Failed: PUUID is empty");
+            return rankData;
+        }
+        var response = await DoCachedRequestAsync(Method.Get,
+            $"https://pd.{Constants.Region}.a.pvp.net/mmr/v1/players/{puuid}",
+            true).ConfigureAwait(false);
+
+        if (!response.IsSuccessful && response.Content != null)
+        {
+            Constants.Log.Error("GetPlayerHistoryAsync Failed: {e}", response.ErrorException);
+            return rankData;
+        }
+
+        var options = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+        };
+        var content = JsonSerializer.Deserialize<MmrResponse>(response.Content, options);
+        var ranks = new int[4];
+        var SeasonInfo = content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act;
+        
+        for (int i = 0; i < ranks.Length; i++)
+        {
+            if (!SeasonInfo.TryGetValue(seasonData[i].ToString(), out var currentActJsonElement)) continue;
+
+            var act = currentActJsonElement.Deserialize<ActInfo>();
+            var rank = act.CompetitiveTier;
+
+            if (rank is 1 or 2) rank = 0;
+            if (Constants.BeforeAscendantSeasons.Contains(seasonData[i])) rank += 3;
+
+            ranks[i] = rank;
+        }
+
+        if (ranks[0] >= 24)
+        {
+            var leaderboardResponse = await DoCachedRequestAsync(Method.Get,
+                $"https://pd.{Constants.Shard}.a.pvp.net/mmr/v1/leaderboards/affinity/{Constants.Region}/queue/competitive/season/{seasonData[0]}?startIndex=0&size=0",
+                true).ConfigureAwait(false);
+            if (leaderboardResponse.Content != null && leaderboardResponse.IsSuccessful)
+            {
+                var leaderboardcontent = JsonSerializer.Deserialize<LeaderboardsResponse>(leaderboardResponse.Content);
+                try
+                {
+                    rankData.MaxRr = leaderboardcontent.TierDetails[ranks[0].ToString()].RankedRatingThreshold;
+                }
+                catch (Exception e)
+                {
+                    Constants.Log.Error("GetPlayerHistoryAsync Failed; leaderboardcontent error: {e}", e);
+                }
+            }
+            else
+            {
+                Constants.Log.Error("GetPlayerHistoryAsync Failed; leaderboardResponse error: {e}", leaderboardResponse.ErrorException);
+            }
+        }
+
+        try
+        {
+            var rankNames = JsonSerializer.Deserialize<Dictionary<int, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\competitivetiers.txt").ConfigureAwait(false));
+
+            rankData.RankImages = new Uri[ranks.Length];
+            rankData.RankNames = new string[ranks.Length];
+
+            for (int i = 0; i < ranks.Length; i++)
+            {
+                rankNames.TryGetValue(ranks[i], out var rank);
+                rankData.RankImages[i] = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\ranksimg\\{ranks[i]}.png");
+                rankData.RankNames[i] = rank;
+            }
+        }
+        catch (Exception e)
+        {
+            Constants.Log.Error("GetPlayerHistoryAsync Failed; rank dictionary error: {e}", e);
         }
 
         return rankData;

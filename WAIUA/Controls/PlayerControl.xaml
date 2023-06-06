@@ -211,8 +211,8 @@
 				Grid.Column="2"
 				VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Columns="3" Rows="1">
 				<Image
-					Source="{Binding PlayerCell.RankData.PreviouspreviouspreviousrankImage, ElementName=Self}"
-					ToolTip="{Binding PlayerCell.RankData.PreviouspreviouspreviousrankName, ElementName=Self}"
+					Source="{Binding PlayerCell.RankData.RankImages[3], ElementName=Self}"
+					ToolTip="{Binding PlayerCell.RankData.RankNames[3], ElementName=Self}"
 					ToolTipService.InitialShowDelay="0" RenderOptions.BitmapScalingMode="HighQuality">
 					<Image.Effect>
 						<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
@@ -220,16 +220,16 @@
 				</Image>
 				<Image
 
-					Source="{Binding PlayerCell.RankData.PreviouspreviousrankImage, ElementName=Self}"
-					ToolTip="{Binding PlayerCell.RankData.PreviouspreviousrankName, ElementName=Self}"
+					Source="{Binding PlayerCell.RankData.RankImages[2], ElementName=Self}"
+					ToolTip="{Binding PlayerCell.RankData.RankNames[2], ElementName=Self}"
 					ToolTipService.InitialShowDelay="0" RenderOptions.BitmapScalingMode="HighQuality">
 					<Image.Effect>
 						<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
 					</Image.Effect>
 				</Image>
 				<Image
-					Source="{Binding PlayerCell.RankData.PreviousrankImage, ElementName=Self}"
-					ToolTip="{Binding PlayerCell.RankData.PreviousrankName, ElementName=Self}"
+					Source="{Binding PlayerCell.RankData.RankImages[1], ElementName=Self}"
+					ToolTip="{Binding PlayerCell.RankData.RankNames[1], ElementName=Self}"
 					ToolTipService.InitialShowDelay="0" RenderOptions.BitmapScalingMode="HighQuality">
 					<Image.Effect>
 						<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
@@ -285,11 +285,11 @@
 				Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
 				Margin="10,0,0,10"
 				HorizontalAlignment="Right"
-				ToolTip="{Binding PlayerCell.RankData.RankName, ElementName=Self}"
+				ToolTip="{Binding PlayerCell.RankData.RankNames[0], ElementName=Self}"
 				ToolTipService.InitialShowDelay="0">
 				<Border.Background>
 					<ImageBrush RenderOptions.BitmapScalingMode="HighQuality"
-					            ImageSource="{Binding PlayerCell.RankData.RankImage, ElementName=Self}" />
+					            ImageSource="{Binding PlayerCell.RankData.RankImages[0], ElementName=Self}" />
 				</Border.Background>
 				<Border.Effect>
 					<DropShadowEffect BlurRadius="5" ShadowDepth="3" />

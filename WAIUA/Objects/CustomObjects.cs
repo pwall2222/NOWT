@@ -92,14 +92,8 @@ public partial class SkinData
 public partial class RankData
 {
     [ObservableProperty] private int _maxRr = 100;
-    [ObservableProperty] private Uri _previouspreviouspreviousrankImage;
-    [ObservableProperty] private string _previouspreviouspreviousrankName;
-    [ObservableProperty] private Uri _previouspreviousrankImage;
-    [ObservableProperty] private string _previouspreviousrankName;
-    [ObservableProperty] private Uri _previousrankImage;
-    [ObservableProperty] private string _previousrankName;
-    [ObservableProperty] private Uri _rankImage;
-    [ObservableProperty] private string _rankName;
+    [ObservableProperty] private Uri[] _rankImages;
+    [ObservableProperty] private string[] _rankNames;
 }
 
 [INotifyPropertyChanged]
