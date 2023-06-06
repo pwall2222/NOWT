@@ -61,10 +61,10 @@ public static class ValApi
 
     private static async Task<string> GetLocalValApiVersionAsync()
     {
-        if (!File.Exists(Constants.LocalAppDataPath + "\\ValAPI\\version.txt")) return null;
+        if (!File.Exists(Constants.LocalAppDataPath + "\\ValAPI\\version.json")) return null;
         try
         {
-            var lines = await File.ReadAllLinesAsync(Constants.LocalAppDataPath + "\\ValAPI\\version.txt")
+            var lines = await File.ReadAllLinesAsync(Constants.LocalAppDataPath + "\\ValAPI\\version.json")
                 .ConfigureAwait(false);
             return lines[1];
         }
@@ -80,49 +80,49 @@ public static class ValApi
         _mapsInfo = new Urls
         {
             Name = "Maps",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\maps.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\maps.json",
             Url = $"/maps?language={language}"
         };
         _agentsInfo = new Urls
         {
             Name = "Agents",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\agents.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\agents.json",
             Url = $"/agents?language={language}"
         };
         _skinsInfo = new Urls
         {
             Name = "Skins",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\skinchromas.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\skinchromas.json",
             Url = $"/weapons/skinchromas?language={language}"
         };
         _cardsInfo = new Urls
         {
             Name = "Cards",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\cards.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\cards.json",
             Url = $"/playercards?language={language}"
         };
         _spraysInfo = new Urls
         {
             Name = "Sprays",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\sprays.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\sprays.json",
             Url = $"/sprays?language={language}"
         };
         _ranksInfo = new Urls
         {
             Name = "Ranks",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\competitivetiers.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\competitivetiers.json",
             Url = $"/competitivetiers?language={language}"
         };
         _versionInfo = new Urls
         {
             Name = "Version",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\version.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\version.json",
             Url = "/version"
         };
         _gamemodeInfo = new Urls
         {
             Name = "Gamemode",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\gamemode.txt",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\gamemode.json",
             Url = $"/gamemodes?language={language}"
         };
         _allInfo = new List<Urls> {_mapsInfo, _agentsInfo, _ranksInfo, _versionInfo, _skinsInfo, _cardsInfo, _spraysInfo, _gamemodeInfo};

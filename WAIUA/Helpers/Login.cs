@@ -143,7 +143,7 @@ public static class Login
 
     private static async Task GetLatestVersionAsync()
     {
-        var lines = await File.ReadAllLinesAsync(Constants.LocalAppDataPath + "\\ValAPI\\version.txt").ConfigureAwait(false);
+        var lines = await File.ReadAllLinesAsync(Constants.LocalAppDataPath + "\\ValAPI\\version.json").ConfigureAwait(false);
         Constants.Version = lines[0];
     }
 

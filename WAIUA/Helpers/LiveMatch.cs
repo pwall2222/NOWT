@@ -378,7 +378,7 @@ public class LiveMatch
         if (agentid != Guid.Empty)
         {
             identityData.Image = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\agentsimg\\{agentid}.png");
-            var agents = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\agents.txt").ConfigureAwait(false));
+            var agents = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\agents.json").ConfigureAwait(false));
             agents.TryGetValue(agentid, out var agentName);
             identityData.Name = agentName;
         }
@@ -396,7 +396,7 @@ public class LiveMatch
     {
         if (cardid != Guid.Empty)
         {
-            var cards = JsonSerializer.Deserialize<Dictionary<Guid, ValNameImage>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\cards.txt").ConfigureAwait(false));
+            var cards = JsonSerializer.Deserialize<Dictionary<Guid, ValNameImage>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\cards.json").ConfigureAwait(false));
             cards.TryGetValue(cardid, out var card);
             return new IdentityData
             {
@@ -450,9 +450,9 @@ public class LiveMatch
         Dictionary<Guid, ValNameImage> skins = null;
         try
         {
-            skins = JsonSerializer.Deserialize<Dictionary<Guid, ValNameImage>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\skinchromas.txt").ConfigureAwait(false));
-            cards = JsonSerializer.Deserialize<Dictionary<Guid, ValCard>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\cards.txt").ConfigureAwait(false));
-            sprays = JsonSerializer.Deserialize<Dictionary<Guid, ValNameImage>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\sprays.txt").ConfigureAwait(false));
+            skins = JsonSerializer.Deserialize<Dictionary<Guid, ValNameImage>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\skinchromas.json").ConfigureAwait(false));
+            cards = JsonSerializer.Deserialize<Dictionary<Guid, ValCard>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\cards.json").ConfigureAwait(false));
+            sprays = JsonSerializer.Deserialize<Dictionary<Guid, ValNameImage>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\sprays.json").ConfigureAwait(false));
         }
         catch (Exception e)
         {
@@ -695,7 +695,7 @@ public class LiveMatch
 
         try
         {
-            var rankNames = JsonSerializer.Deserialize<Dictionary<int, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\competitivetiers.txt").ConfigureAwait(false));
+            var rankNames = JsonSerializer.Deserialize<Dictionary<int, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\competitivetiers.json").ConfigureAwait(false));
 
             rankData.RankImages = new Uri[ranks.Length];
             rankData.RankNames = new string[ranks.Length];
@@ -834,7 +834,7 @@ public class LiveMatch
 
             if (puuid != Constants.Ppuuid) return playerUiData;
 
-            var maps = JsonSerializer.Deserialize<Dictionary<string, ValMap>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\maps.txt").ConfigureAwait(false));
+            var maps = JsonSerializer.Deserialize<Dictionary<string, ValMap>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\maps.json").ConfigureAwait(false));
 
             maps.TryGetValue(content.MatchMap, out var map);
             MatchInfo.Map = map.Name;
@@ -891,7 +891,7 @@ public class LiveMatch
 
             if (gameModeName == "")
             {
-                var gamemodes = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\gamemode.txt").ConfigureAwait(false));
+                var gamemodes = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\gamemode.json").ConfigureAwait(false));
                 gamemodes.TryGetValue(gameModeId, out var gamemode);
                 MatchInfo.GameMode = gamemode;
             }
