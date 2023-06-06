@@ -90,51 +90,6 @@
 			<fa:ImageAwesome Grid.Column="2" PrimaryColor="#007EF9" Icon="Solid_Info" Margin="10" />
 
 		</Grid>
-		<StackPanel
-			Margin="0 5 5 0"
-			Grid.Row="2" Grid.Column="0"
-			Width="Auto"
-			VerticalAlignment="Bottom">
-			<Button Background="Transparent"
-			        Cursor="Hand"
-			        BorderThickness="0"
-			        FontFamily="{StaticResource Nunito}"
-			        Height="100"
-			        HorizontalAlignment="Left"
-			        RenderOptions.BitmapScalingMode="HighQuality"
-			        Click="ImageClickAsync"
-			        Tag="https://discord.gg/X7CYCeZSRK">
-				<!-- <Image Source="/Assets/discord.png" > -->
-				<!-- 	<Image.Effect> -->
-				<!-- 		<DropShadowEffect BlurRadius="5" ShadowDepth="3" /> -->
-				<!-- 	</Image.Effect> -->
-				<!-- </Image> -->
-				<fa:ImageAwesome PrimaryColor="#7289DA"
-				                 Icon="Brands_Discord" Margin="10" />
-			</Button>
-			<TextBlock
-				FontSize="30"
-				FontWeight="SemiBold"
-				Foreground="White"
-				FontFamily="{StaticResource Nunito}"
-				TextAlignment="left"
-				TextWrapping="Wrap">
-				<Hyperlink NavigateUri="https://discord.gg/X7CYCeZSRK" RequestNavigate="HandleLinkClickAsync">
-					<Hyperlink.Inlines>
-						<Run Text="{x:Static p:Resources.JoinDiscord}" />
-					</Hyperlink.Inlines>
-				</Hyperlink>
-			</TextBlock>
-			<TextBlock
-				Width="Auto"
-				FontSize="20"
-				FontFamily="{StaticResource Nunito}"
-				Foreground="White"
-				Opacity="0.7"
-				Text="{x:Static p:Resources.JoinDiscordSub}"
-				TextAlignment="Left"
-				TextWrapping="Wrap" />
-		</StackPanel>
 
 		<StackPanel
 			Margin="5"
@@ -163,7 +118,7 @@
 				Foreground="White"
 				FontFamily="{StaticResource Nunito}"
 				TextWrapping="Wrap">
-				WAIUA
+				NOWT
 			</TextBlock>
 			<TextBlock
 				HorizontalAlignment="Center"
@@ -171,7 +126,7 @@
 				FontWeight="DemiBold"
 				FontFamily="{StaticResource Nunito}"
 				Foreground="#32e2b2"
-				Text="Who Am I Up Against?"
+				Text="New Oponent Who This?"
 				TextWrapping="Wrap" />
 		</StackPanel>
 
@@ -254,45 +209,6 @@
 					</Ellipse.Fill>
 				</Ellipse>
 			</StackPanel>
-		</StackPanel>
-
-		<StackPanel Margin="5 5 0 0" Grid.Row="2" Grid.Column="2" VerticalAlignment="Bottom">
-			<Button Background="Transparent"
-			        BorderThickness="0"
-			        Height="100"
-			        Width="100"
-			        Cursor="Hand"
-			        HorizontalAlignment="Right"
-			        RenderOptions.BitmapScalingMode="HighQuality"
-			        Click="ImageClickAsync"
-			        Tag="https://sonel.dev">
-				<Image Source="/Assets/Soneliem.png">
-					<Image.Effect>
-						<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
-					</Image.Effect>
-				</Image>
-			</Button>
-			<TextBlock
-				FontSize="30"
-				FontWeight="SemiBold"
-				Foreground="White"
-				FontFamily="{StaticResource Nunito}"
-				TextAlignment="Right"
-				TextWrapping="Wrap">
-				<Hyperlink NavigateUri="https://sonel.dev" RequestNavigate="HandleLinkClickAsync">
-					<Hyperlink.Inlines>
-						<Run Text="{x:Static p:Resources.Author}" />
-					</Hyperlink.Inlines>
-				</Hyperlink>
-			</TextBlock>
-			<TextBlock
-				FontSize="20"
-				Foreground="White"
-				FontFamily="{StaticResource Nunito}"
-				Opacity="0.7"
-				Text="{x:Static p:Resources.Translator}"
-				TextAlignment="Right"
-				TextWrapping="Wrap" />
 		</StackPanel>
 	</Grid>
 </UserControl>
