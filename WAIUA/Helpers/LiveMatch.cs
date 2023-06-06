@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -824,93 +824,84 @@ public class LiveMatch
             Puuid = puuid
         };
 
-        foreach (var friend in presences.Presences)
-            try
+        try {
+            var friend = presences.Presences.First(friend => friend.Puuid == puuid);
+            var json = Encoding.UTF8.GetString(Convert.FromBase64String(friend.Private));
+            var content = JsonSerializer.Deserialize<PresencesPrivate>(json);
+            if (content == null) return playerUiData;
+
+            playerUiData.PartyUuid = content.PartyId;
+
+            if (puuid != Constants.Ppuuid) return playerUiData;
+
+            var maps = JsonSerializer.Deserialize<Dictionary<string, ValMap>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\maps.txt").ConfigureAwait(false));
+
+            maps.TryGetValue(content.MatchMap, out var map);
+            MatchInfo.Map = map.Name;
+            MatchInfo.MapImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\mapsimg\\{map.UUID}.png");
+            playerUiData.BackgroundColour = "#181E34";
+            Constants.PPartyId = content.PartyId;
+
+            if (content?.ProvisioningFlow == "CustomGame")
             {
-                if (friend.Puuid != puuid) continue;
-                var json = Encoding.UTF8.GetString(Convert.FromBase64String(friend.Private));
-                var content = JsonSerializer.Deserialize<PresencesPrivate>(json);
-                if (content != null)
-                {
-                    playerUiData.PartyUuid = content.PartyId;
-                    if (puuid == Constants.Ppuuid)
-                    {
-                        var maps = JsonSerializer.Deserialize<Dictionary<string, ValMap>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\maps.txt").ConfigureAwait(false));
-
-                        maps.TryGetValue(content.MatchMap, out var map);
-                        MatchInfo.Map = map.Name;
-                        MatchInfo.MapImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\mapsimg\\{map.UUID}.png");
-                        playerUiData.BackgroundColour = "#181E34";
-                        Constants.PPartyId = content.PartyId;
-
-                        if (content?.ProvisioningFlow == "CustomGame")
-                        {
-                            MatchInfo.GameMode = "Custom";
-                            MatchInfo.GameModeImage = new Uri(Constants.LocalAppDataPath + "\\ValAPI\\gamemodeimg\\96bd3920-4f36-d026-2b28-c683eb0bcac5.png");
-                        }
-                        else
-                        {
-                            var textInfo = new CultureInfo("en-US", false).TextInfo;
-
-                            var gameModeName = "";
-                            var gameModeId = Guid.Parse("96bd3920-4f36-d026-2b28-c683eb0bcac5");
-                            QueueId = content?.QueueId;
-                            Status = content?.SessionLoopState;
-
-                            switch (content?.QueueId)
-                            {
-                                case "competitive":
-                                    gameModeName = "Competitive";
-                                    break;
-                                case "unrated":
-                                    gameModeName = "Unrated";
-                                    break;
-                                case "deathmatch":
-                                    gameModeId = Guid.Parse("a8790ec5-4237-f2f0-e93b-08a8e89865b2");
-                                    break;
-                                case "spikerush":
-                                    gameModeId = Guid.Parse("e921d1e6-416b-c31f-1291-74930c330b7b");
-                                    break;
-                                case "ggteam":
-                                    gameModeId = Guid.Parse("a4ed6518-4741-6dcb-35bd-f884aecdc859");
-                                    break;
-                                case "newmap":
-                                    gameModeName = "New Map";
-                                    break;
-                                case "onefa":
-                                    gameModeId = Guid.Parse("96bd3920-4f36-d026-2b28-c683eb0bcac5");
-                                    break;
-                                case "snowball":
-                                    gameModeId = Guid.Parse("57038d6d-49b1-3a74-c5ef-3395d9f23a97");
-                                    break;
-                                default:
-                                    gameModeName = textInfo.ToTitleCase(content.QueueId);
-                                    break;
-                            }
-
-
-                            if (gameModeName == "")
-                            {
-                                var gamemodes = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\gamemode.txt").ConfigureAwait(false));
-                                gamemodes.TryGetValue(gameModeId, out var gamemode);
-                                MatchInfo.GameMode = gamemode;
-                            }
-                            else
-                            {
-                                MatchInfo.GameMode = gameModeName;
-                            }
-
-                            MatchInfo.GameModeImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\gamemodeimg\\{gameModeId}.png");
-                        }
-                    }
-                }
-
-                break;
+                MatchInfo.GameMode = "Custom";
+                MatchInfo.GameModeImage = new Uri(Constants.LocalAppDataPath + "\\ValAPI\\gamemodeimg\\96bd3920-4f36-d026-2b28-c683eb0bcac5.png");
+                return playerUiData;
             }
-            catch (Exception e)
+            var textInfo = new CultureInfo("en-US", false).TextInfo;
+
+            var gameModeName = "";
+            var gameModeId = Guid.Parse("96bd3920-4f36-d026-2b28-c683eb0bcac5");
+            QueueId = content?.QueueId;
+            Status = content?.SessionLoopState;
+
+            switch (content?.QueueId)
             {
-                Constants.Log.Error("GetPresenceInfoAsync Failed; To Base 64 failed: {Exception}", e);
+                case "competitive":
+                    gameModeName = "Competitive";
+                    break;
+                case "unrated":
+                    gameModeName = "Unrated";
+                    break;
+                case "deathmatch":
+                    gameModeId = Guid.Parse("a8790ec5-4237-f2f0-e93b-08a8e89865b2");
+                    break;
+                case "spikerush":
+                    gameModeId = Guid.Parse("e921d1e6-416b-c31f-1291-74930c330b7b");
+                    break;
+                case "ggteam":
+                    gameModeId = Guid.Parse("a4ed6518-4741-6dcb-35bd-f884aecdc859");
+                    break;
+                case "newmap":
+                    gameModeName = "New Map";
+                    break;
+                case "onefa":
+                    gameModeId = Guid.Parse("96bd3920-4f36-d026-2b28-c683eb0bcac5");
+                    break;
+                case "snowball":
+                    gameModeId = Guid.Parse("57038d6d-49b1-3a74-c5ef-3395d9f23a97");
+                    break;
+                default:
+                    gameModeName = textInfo.ToTitleCase(content.QueueId);
+                    break;
             }
+
+
+            MatchInfo.GameMode = gameModeName;
+
+            if (gameModeName == "")
+            {
+                var gamemodes = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\gamemode.txt").ConfigureAwait(false));
+                gamemodes.TryGetValue(gameModeId, out var gamemode);
+                MatchInfo.GameMode = gamemode;
+            }
+
+            MatchInfo.GameModeImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\gamemodeimg\\{gameModeId}.png");
+        }
+        catch (Exception e)
+        {
+            Constants.Log.Error("GetPresenceInfoAsync Failed; To Base 64 failed: {Exception}", e);
+        }
 
         return playerUiData;
     }
