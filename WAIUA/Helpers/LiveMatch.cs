@@ -120,6 +120,153 @@ public class LiveMatch
         return null;
     }
 
+    private async Task<Player> GetPrePlayerInfo(RiotPrePlayer riotPlayer, sbyte index, SeasonData seasonData, PresencesResponse presencesResponse)
+    {
+        Player player = new();
+        try
+        {
+            var cardTask = GetCardAsync(riotPlayer.PlayerIdentity.PlayerCardId, index);
+            var historyTask = GetPlayerHistoryAsync(riotPlayer.Subject, seasonData);
+            var presenceTask = GetPresenceInfoAsync(riotPlayer.Subject, presencesResponse);
+
+            await Task.WhenAll(cardTask, historyTask, presenceTask).ConfigureAwait(false);
+
+            player.IdentityData = cardTask.Result;
+            player.RankData = historyTask.Result;
+            player.PlayerUiData = presenceTask.Result;
+            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
+            player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
+            player.TeamId = "Blue";
+            player.Active = Visibility.Visible;
+        }
+        catch (Exception e)
+        {
+            Constants.Log.Error("GetPlayerInfo() (PRE) failed for player {index}: {e}", index, e);
+        }
+
+        return player;
+    }
+
+    private async Task<Player> GetLivePlayerInfo(RiotLivePlayer riotPlayer, sbyte index, SeasonData seasonData, PresencesResponse presencesResponse)
+    {
+        Player player = new();
+        try
+        {
+            var agentTask = GetAgentInfoAsync(riotPlayer.CharacterId);
+            var playerTask = GetPlayerHistoryAsync(riotPlayer.Subject, seasonData);
+            var skinTask = GetMatchSkinInfoAsync(index, riotPlayer.PlayerIdentity.PlayerCardId);
+            var presenceTask = GetPresenceInfoAsync(riotPlayer.Subject, presencesResponse);
+
+            await Task.WhenAll(agentTask, playerTask, skinTask, presenceTask).ConfigureAwait(false);
+
+            player.IdentityData = agentTask.Result;
+            player.RankData = playerTask.Result;
+            player.SkinData = skinTask.Result;
+            player.PlayerUiData = presenceTask.Result;
+            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
+            player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
+            player.TeamId = riotPlayer.TeamId;
+            player.Active = Visibility.Visible;
+        }
+        catch (Exception e)
+        {
+            Constants.Log.Error("GetPlayerInfo() (LIVE) failed for player {index}: {e}", index, e);
+        }
+
+        return player;
+    }
+
+    private async Task GetPrePlayers(List<Task<Player>> playerTasks, PreMatchResponse matchIdInfo, SeasonData seasonData, PresencesResponse presencesResponse)
+    {
+        Task sTask = Task.Run(async () => seasonData = await GetSeasonsAsync().ConfigureAwait(false));
+        Task pTask = Task.Run(async () => presencesResponse = await GetPresencesAsync().ConfigureAwait(false));
+        await Task.WhenAll(sTask, pTask).ConfigureAwait(false);
+        sbyte index = 0;
+
+        foreach (var riotPlayer in matchIdInfo.AllyTeam.Players)
+        {
+            playerTasks.Add(GetPrePlayerInfo(riotPlayer, index, seasonData, presencesResponse));
+            index++;
+        }
+    }
+
+    private async Task GetLivePlayers(List<Task<Player>> playerTasks, LiveMatchResponse matchIdInfo, SeasonData seasonData, PresencesResponse presencesResponse)
+    {
+        Task sTask = Task.Run(async () => seasonData = await GetSeasonsAsync().ConfigureAwait(false));
+        Task pTask = Task.Run(async () => presencesResponse = await GetPresencesAsync().ConfigureAwait(false));
+        await Task.WhenAll(sTask, pTask).ConfigureAwait(false);
+        sbyte index = 0;
+
+        foreach (var riotPlayer in matchIdInfo.Players)
+        {
+            if (riotPlayer.IsCoach) continue;
+
+            playerTasks.Add(GetLivePlayerInfo(riotPlayer, index, seasonData, presencesResponse));
+
+            index++;
+        }
+    }
+
+    private async Task<dynamic> GetMatchResponse()
+    {
+        if (Stage == "pre")
+        {
+            return await GetPreMatchDetailsAsync().ConfigureAwait(false);
+        }
+        return await GetLiveMatchDetailsAsync().ConfigureAwait(false);
+    }
+
+    private void SetServer(dynamic matchIdInfo) {
+        var gamePodId = matchIdInfo.GamePodId;
+        var nameAvailable = Constants.GamePodsDictionary.TryGetValue(gamePodId, out string serverName);
+        if (!nameAvailable) return;
+        MatchInfo.Server = "🌍 " + serverName;
+    }
+
+    private async Task GetPlayers(UpdateProgress updateProgress, List<Task<Player>> playerTasks, SeasonData seasonData, PresencesResponse presencesResponse)
+    {
+        var matchIdInfo = await GetMatchResponse();
+        updateProgress(10);
+
+        if (matchIdInfo == null) return;
+
+        SetServer(matchIdInfo);
+
+        if (Stage == "pre")
+        {
+            await GetPrePlayers(playerTasks, matchIdInfo, seasonData, presencesResponse);
+            return;
+        }
+        await GetLivePlayers(playerTasks, matchIdInfo, seasonData, presencesResponse);
+    }
+
+    private void AddPlayerParties(List<Player> playerList) {
+        var playerPartyColors = new List<string>
+            {"Red", "#32e2b2", "DarkOrange", "White", "DeepSkyBlue", "MediumPurple", "SaddleBrown"};
+        List<string> newArray = new();
+        newArray.AddRange(Enumerable.Repeat("Transparent", playerList.Count));
+
+        for (var i = 0; i < playerList.Count; i++)
+        {
+            if (playerList[i].PlayerUiData is null) continue;
+
+            var colourused = false;
+            var id = playerList[i].PlayerUiData.PartyUuid;
+            for (var j = i; j < playerList.Count; j++)
+            {
+                if (newArray[i] != "Transparent" || playerList[i] == playerList[j] ||
+                    playerList[j].PlayerUiData?.PartyUuid != id || id == Guid.Empty) continue;
+                newArray[j] = playerPartyColors[0];
+                colourused = true;
+            }
+
+            if (!colourused) continue;
+            newArray[i] = playerPartyColors[0];
+            playerPartyColors.RemoveAt(0);
+        }
+        for (var i = 0; i < playerList.Count; i++) playerList[i].PlayerUiData.PartyColour = newArray[i];
+    }
+
     public async Task<List<Player>> LiveMatchOutputAsync(UpdateProgress updateProgress)
     {
         var playerList = new List<Player>();
@@ -127,144 +274,14 @@ public class LiveMatch
         var seasonData = new SeasonData();
         var presencesResponse = new PresencesResponse();
 
-        if (Stage == "pre")
-        {
-            var matchIdInfo = await GetPreMatchDetailsAsync().ConfigureAwait(false);
-            updateProgress(10);
-
-            if (matchIdInfo != null)
-            {
-                Task sTask = Task.Run(async () => seasonData = await GetSeasonsAsync().ConfigureAwait(false));
-                Task pTask = Task.Run(async () => presencesResponse = await GetPresencesAsync().ConfigureAwait(false));
-                await Task.WhenAll(sTask, pTask).ConfigureAwait(false);
-                sbyte index = 0;
-
-                foreach (var riotPlayer in matchIdInfo.AllyTeam.Players)
-                {
-                    async Task<Player> GetPlayerInfo()
-                    {
-                        Player player = new();
-                        try
-                        {
-                            var t1 = GetCardAsync(riotPlayer.PlayerIdentity.PlayerCardId, index);
-                            var t4 = GetPlayerHistoryAsync(riotPlayer.Subject, seasonData);
-                            var t6 = GetPresenceInfoAsync(riotPlayer.Subject, presencesResponse);
-
-                            await Task.WhenAll(t1, t4, t6).ConfigureAwait(false);
-
-                            player.IdentityData = t1.Result;
-                            player.RankData = t4.Result;
-                            player.PlayerUiData = t6.Result;
-                            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
-                            player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
-                            player.TeamId = "Blue";
-                            player.Active = Visibility.Visible;
-                        }
-                        catch (Exception e)
-                        {
-                            Constants.Log.Error("GetPlayerInfo() (PRE) failed for player {index}: {e}", index, e);
-                        }
-
-                        return player;
-                    }
-
-                    playerTasks.Add(GetPlayerInfo());
-
-
-                    index++;
-                }
-
-                var gamePodId = matchIdInfo.GamePodId;
-                if (Constants.GamePodsDictionary.TryGetValue(gamePodId, out var serverName)) MatchInfo.Server = "🌍 " + serverName;
-            }
-        }
-        else
-        {
-            var matchIdInfo = await GetLiveMatchDetailsAsync().ConfigureAwait(false);
-            updateProgress(10);
-
-            if (matchIdInfo != null)
-            {
-                Task sTask = Task.Run(async () => seasonData = await GetSeasonsAsync().ConfigureAwait(false));
-                Task pTask = Task.Run(async () => presencesResponse = await GetPresencesAsync().ConfigureAwait(false));
-                await Task.WhenAll(sTask, pTask).ConfigureAwait(false);
-                sbyte index = 0;
-
-                foreach (var riotPlayer in matchIdInfo.Players)
-                {
-                    if (riotPlayer.IsCoach) continue;
-
-                    async Task<Player> GetPlayerInfo()
-                    {
-                        Player player = new();
-                        try
-                        {
-                            var t1 = GetAgentInfoAsync(riotPlayer.CharacterId);
-                            var t3 = GetPlayerHistoryAsync(riotPlayer.Subject, seasonData);
-                            var t4 = GetMatchSkinInfoAsync(index, riotPlayer.PlayerIdentity.PlayerCardId);
-                            var t5 = GetPresenceInfoAsync(riotPlayer.Subject, presencesResponse);
-
-                            await Task.WhenAll(t1, t3, t4, t5).ConfigureAwait(false);
-
-                            player.IdentityData = t1.Result;
-                            player.RankData = t3.Result;
-                            player.SkinData = t4.Result;
-                            player.PlayerUiData = t5.Result;
-                            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
-                            player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
-                            player.TeamId = riotPlayer.TeamId;
-                            player.Active = Visibility.Visible;
-                        }
-                        catch (Exception e)
-                        {
-                            Constants.Log.Error("GetPlayerInfo() (CORE) failed for player {index}: {e}", index, e);
-                        }
-
-                        return player;
-                    }
-
-                    playerTasks.Add(GetPlayerInfo());
-
-
-                    index++;
-                }
-
-                var gamePodId = matchIdInfo.GamePodId;
-                if (Constants.GamePodsDictionary.TryGetValue(gamePodId, out var serverName)) MatchInfo.Server = "🌍 " + serverName;
-            }
-        }
+        await GetPlayers(updateProgress, playerTasks, seasonData, presencesResponse);
 
         playerList.AddRange(await Task.WhenAll(playerTasks).ConfigureAwait(false));
         updateProgress(75);
 
-        var colours = new List<string>
-            {"Red", "#32e2b2", "DarkOrange", "White", "DeepSkyBlue", "MediumPurple", "SaddleBrown"};
-
-        List<string> newArray = new();
-        newArray.AddRange(Enumerable.Repeat("Transparent", playerList.Count));
-
         try
         {
-            for (var i = 0; i < playerList.Count; i++)
-            {
-                if (playerList[i].PlayerUiData is null) continue;
-
-                var colourused = false;
-                var id = playerList[i].PlayerUiData.PartyUuid;
-                for (var j = i; j < playerList.Count; j++)
-                {
-                    if (newArray[i] != "Transparent" || playerList[i] == playerList[j] ||
-                        playerList[j].PlayerUiData?.PartyUuid != id || id == Guid.Empty) continue;
-                    newArray[j] = colours[0];
-                    colourused = true;
-                }
-
-                if (!colourused) continue;
-                newArray[i] = colours[0];
-                colours.RemoveAt(0);
-            }
-
-            for (var i = 0; i < playerList.Count; i++) playerList[i].PlayerUiData.PartyColour = newArray[i];
+            AddPlayerParties(playerList);
             updateProgress(100);
         }
         catch (Exception e)
@@ -897,7 +914,7 @@ public class LiveMatch
                 var response = await DoCachedRequestAsync(Method.Get,
                     url.ToString(),
                     false).ConfigureAwait(false);
-                var numericStatusCode = (short) response.StatusCode;
+                var numericStatusCode = (short)response.StatusCode;
 
                 if (numericStatusCode == 200) return url;
             }
