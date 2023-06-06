@@ -55,6 +55,8 @@ public static class Constants
         new Guid("808202d6-4f2b-a8ff-1feb-b3a0590ad79f")
     };
 
+    public static string Platform = "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9";
+
     public static string AccessToken { get; set; }
     public static string EntitlementToken { get; set; }
     public static string Region { get; set; }

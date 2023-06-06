@@ -834,8 +834,7 @@ public class LiveMatch
             RestClient client = new($"https://shared.{Constants.Region}.a.pvp.net/content-service/v3/content");
             var request = new RestRequest().AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken)
                 .AddHeader("Authorization", $"Bearer {Constants.AccessToken}")
-                .AddHeader("X-Riot-ClientPlatform",
-                    "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9")
+                .AddHeader("X-Riot-ClientPlatform", Constants.Platform)
                 .AddHeader("X-Riot-ClientVersion", Constants.Version);
             client.UseSystemTextJson(new JsonSerializerOptions
             {
@@ -943,8 +942,7 @@ public class LiveMatch
 
         var request = new RestRequest().AddHeader("Authorization",
                 $"Basic {base64String}")
-            .AddHeader("X-Riot-ClientPlatform",
-                "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9")
+            .AddHeader("X-Riot-ClientPlatform", Constants.Platform)
             .AddHeader("X-Riot-ClientVersion", Constants.Version);
         client.UseSystemTextJson(new JsonSerializerOptions
         {
