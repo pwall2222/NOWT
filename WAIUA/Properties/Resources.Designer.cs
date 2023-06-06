@@ -385,15 +385,6 @@ namespace WAIUA.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Aim Trainer.
-        /// </summary>
-        public static string StartTrainer {
-            get {
-                return ResourceManager.GetString("StartTrainer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Status {

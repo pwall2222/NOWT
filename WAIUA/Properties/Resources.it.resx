@@ -237,9 +237,6 @@
   <data name="HighScore" xml:space="preserve">
     <value>Mio record</value>
   </data>
-  <data name="StartTrainer" xml:space="preserve">
-    <value>Avvia Aim trainer</value>
-  </data>
   <data name="Player" xml:space="preserve">
     <value>Giocatore</value>
   </data>

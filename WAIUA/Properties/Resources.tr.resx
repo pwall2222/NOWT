@@ -237,9 +237,6 @@
   <data name="HighScore" xml:space="preserve">
     <value>En Yüksek Puan:</value>
   </data>
-  <data name="StartTrainer" xml:space="preserve">
-    <value>Aim Trainer&apos;ı Başlat</value>
-  </data>
   <data name="Player" xml:space="preserve">
     <value>Oyuncu</value>
   </data>

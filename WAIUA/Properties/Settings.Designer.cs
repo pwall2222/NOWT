@@ -34,17 +34,5 @@ namespace WAIUA.Properties {
                 this["Language"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int AimScore {
-            get {
-                return ((int)(this["AimScore"]));
-            }
-            set {
-                this["AimScore"] = value;
-            }
-        }
     }
 }

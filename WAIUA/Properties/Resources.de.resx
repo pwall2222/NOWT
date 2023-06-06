@@ -240,9 +240,6 @@
     <value>Highscore:</value>
     <comment>there is literally no german word for this that doesn&apos;t sound stupid, everybody says highscore.</comment>
   </data>
-  <data name="StartTrainer" xml:space="preserve">
-    <value>Aim Trainer Starten</value>
-  </data>
   <data name="Player" xml:space="preserve">
     <value>Spieler</value>
   </data>

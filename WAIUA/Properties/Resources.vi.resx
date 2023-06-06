@@ -237,9 +237,6 @@
   <data name="HighScore" xml:space="preserve">
     <value>Điểm cao nhất:</value>
   </data>
-  <data name="StartTrainer" xml:space="preserve">
-    <value>Bắt đầu luyện aim</value>
-  </data>
   <data name="Player" xml:space="preserve">
     <value>Người chơi</value>
   </data>
