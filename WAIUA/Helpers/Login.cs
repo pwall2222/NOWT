@@ -54,10 +54,10 @@ public static class Login
         }
 
         foreach (var parts in from session in response.Data.ExtensionData
-                 select session.Value.Deserialize<ExternalSessions>()
+                              select session.Value.Deserialize<ExternalSessions>()
                  into game
-                 where game is {ProductId: "valorant"}
-                 select game.LaunchConfiguration.Arguments[4].Split('=', '&'))
+                              where game is { ProductId: "valorant" }
+                              select game.LaunchConfiguration.Arguments[4].Split('=', '&'))
         {
             switch (parts[1])
             {
@@ -89,9 +89,9 @@ public static class Login
         request.AddHeader("X-Riot-ClientVersion", Constants.Version);
     }
 
-    public static async Task<string> GetNameServiceGetUsernameAsync(Guid puuid)
+    public static async Task<string[]> GetNameServiceGetUsernamesAsync(Guid[] puuids)
     {
-        if (puuid == Guid.Empty) return null;
+        if (puuids.Length == 0) return null;
         var options = new RestClientOptions(new Uri($"https://pd.{Constants.Region}.a.pvp.net/name-service/v2/players"))
         {
             RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
@@ -104,24 +104,42 @@ public static class Login
 
         AddAuthToRequest(request);
 
-        string[] body = {puuid.ToString()};
+        string[] body = new string[puuids.Length];
+        for (int i = 0; i < puuids.Length; i++)
+        {
+            body[i] = puuids[i].ToString();
+        }
+
         request.AddJsonBody(body);
         var response = await client.ExecutePutAsync(request).ConfigureAwait(false);
+        string[] names = new string[puuids.Length];
         if (response.IsSuccessful)
             try
             {
-                var incorrectContent = response.Content.Replace("[", string.Empty).Replace("]", string.Empty).Replace("\n", string.Empty);
-                var content = JsonSerializer.Deserialize<NameServiceResponse>(incorrectContent);
-                return content.GameName + "#" + content.TagLine;
+                var incorrectContent = response.Content.Replace("\n", string.Empty);
+                var content = JsonSerializer.Deserialize<NameServiceResponse[]>(incorrectContent);
+                for (int i = 0; i < puuids.Length; i++)
+                {
+                    names[i] = content[i].GameName + "#" + content[i].TagLine;
+                }
+                return names;
             }
             catch (Exception e)
             {
                 Constants.Log.Error("GetNameServiceGetUsernameAsync Failed: {e}", e);
-                return "";
+                return new string[] { "" };
             }
 
         Constants.Log.Error("GetNameServiceGetUsernameAsync Failed: {e}", response.ErrorException);
-        return "";
+        return new string[] { "" };
+    }
+
+
+    public static async Task<string> GetNameServiceGetUsernameAsync(Guid puuid)
+    {
+        if (puuid == Guid.Empty) return null;
+        string[] names = await GetNameServiceGetUsernamesAsync(new Guid[1] { puuid });
+        return names[0];
     }
 
 
