@@ -131,7 +131,7 @@ Thank you for your support! Any donation of $5 and over will get you into the ap
 
 ## Translations
 
-WAIUA Supports full localization and instructions to help with translations can be found in [Localization](https://github.com/Soneliem/WAIUA/blob/master/Localization.md)
+WAIUA Supports full localization and instructions to help with translations can be found in [Localization](./Localization.md)
 
 ## Acknowledgements
 
