@@ -130,6 +130,7 @@
 				TextWrapping="Wrap" />
 		</StackPanel>
 
+		<!--
 		<StackPanel Margin="5 5 5 0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom">
 			<TextBlock
 				FontSize="30"
@@ -210,5 +211,6 @@
 				</Ellipse>
 			</StackPanel>
 		</StackPanel>
+		-->
 	</Grid>
 </UserControl>
