@@ -120,7 +120,7 @@ public class LiveMatch
         return null;
     }
 
-    private async Task<Player> GetPrePlayerInfo(RiotPrePlayer riotPlayer, sbyte index, SeasonData seasonData, PresencesResponse presencesResponse)
+    private async Task<Player> GetPrePlayerInfo(RiotPrePlayer riotPlayer, sbyte index, Guid[] seasonData, PresencesResponse presencesResponse)
     {
         Player player = new();
         try
@@ -147,7 +147,7 @@ public class LiveMatch
         return player;
     }
 
-    private async Task<Player> GetLivePlayerInfo(RiotLivePlayer riotPlayer, sbyte index, SeasonData seasonData, PresencesResponse presencesResponse)
+    private async Task<Player> GetLivePlayerInfo(RiotLivePlayer riotPlayer, sbyte index, Guid[] seasonData, PresencesResponse presencesResponse)
     {
         Player player = new();
         try
@@ -176,7 +176,7 @@ public class LiveMatch
         return player;
     }
 
-    private async Task GetPrePlayers(List<Task<Player>> playerTasks, PreMatchResponse matchIdInfo, SeasonData seasonData, PresencesResponse presencesResponse)
+    private async Task GetPrePlayers(List<Task<Player>> playerTasks, PreMatchResponse matchIdInfo, Guid[] seasonData, PresencesResponse presencesResponse)
     {
         Task sTask = Task.Run(async () => seasonData = await GetSeasonsAsync().ConfigureAwait(false));
         Task pTask = Task.Run(async () => presencesResponse = await GetPresencesAsync().ConfigureAwait(false));
@@ -190,7 +190,7 @@ public class LiveMatch
         }
     }
 
-    private async Task GetLivePlayers(List<Task<Player>> playerTasks, LiveMatchResponse matchIdInfo, SeasonData seasonData, PresencesResponse presencesResponse)
+    private async Task GetLivePlayers(List<Task<Player>> playerTasks, LiveMatchResponse matchIdInfo, Guid[] seasonData, PresencesResponse presencesResponse)
     {
         Task sTask = Task.Run(async () => seasonData = await GetSeasonsAsync().ConfigureAwait(false));
         Task pTask = Task.Run(async () => presencesResponse = await GetPresencesAsync().ConfigureAwait(false));
@@ -223,7 +223,7 @@ public class LiveMatch
         MatchInfo.Server = "🌍 " + serverName;
     }
 
-    private async Task GetPlayers(UpdateProgress updateProgress, List<Task<Player>> playerTasks, SeasonData seasonData, PresencesResponse presencesResponse)
+    private async Task GetPlayers(UpdateProgress updateProgress, List<Task<Player>> playerTasks, Guid[] seasonData, PresencesResponse presencesResponse)
     {
         var matchIdInfo = await GetMatchResponse();
         updateProgress(10);
@@ -271,7 +271,7 @@ public class LiveMatch
     {
         var playerList = new List<Player>();
         var playerTasks = new List<Task<Player>>();
-        var seasonData = new SeasonData();
+        var seasonData = new Guid[4];
         var presencesResponse = new PresencesResponse();
 
         await GetPlayers(updateProgress, playerTasks, seasonData, presencesResponse);
@@ -292,7 +292,7 @@ public class LiveMatch
         return playerList;
     }
 
-    private async Task<Player> GetPartyPlayerInfo(Member riotPlayer, sbyte index, SeasonData seasonData)
+    private async Task<Player> GetPartyPlayerInfo(Member riotPlayer, sbyte index, Guid[] seasonData)
     {
         Player player = new();
 
@@ -631,7 +631,7 @@ public class LiveMatch
         return history;
     }
 
-    private static async Task<RankData> GetPlayerHistoryAsync(Guid puuid, SeasonData seasonData)
+    private static async Task<RankData> GetPlayerHistoryAsync(Guid puuid, Guid[] seasonData)
     {
         var rankData = new RankData();
         if (puuid != Guid.Empty)
@@ -654,7 +654,7 @@ public class LiveMatch
             int rank, prank, pprank, ppprank;
             try
             {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData.CurrentSeason.ToString(), out var currentActJsonElement))
+                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[0].ToString(), out var currentActJsonElement))
                 {
                     var currentAct = currentActJsonElement.Deserialize<ActInfo>();
                     rank = currentAct.CompetitiveTier;
@@ -673,7 +673,7 @@ public class LiveMatch
 
             try
             {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData.PreviousSeason.ToString(), out var pActJsonElement))
+                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[1].ToString(), out var pActJsonElement))
                 {
                     var PAct = pActJsonElement.Deserialize<ActInfo>();
                     switch (PAct.CompetitiveTier)
@@ -683,7 +683,7 @@ public class LiveMatch
                             break;
                         case > 20:
                         {
-                            if (Constants.BeforeAscendantSeasons.Contains(seasonData.PreviousSeason))
+                            if (Constants.BeforeAscendantSeasons.Contains(seasonData[1]))
                                 prank = PAct.CompetitiveTier + 3;
                             else
                                 prank = PAct.CompetitiveTier;
@@ -706,7 +706,7 @@ public class LiveMatch
 
             try
             {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData.PreviouspreviousSeason.ToString(), out var ppActJsonElement))
+                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[2].ToString(), out var ppActJsonElement))
                 {
                     var PPAct = ppActJsonElement.Deserialize<ActInfo>();
                     switch (PPAct.CompetitiveTier)
@@ -716,7 +716,7 @@ public class LiveMatch
                             break;
                         case > 20:
                         {
-                            if (Constants.BeforeAscendantSeasons.Contains(seasonData.PreviouspreviousSeason))
+                            if (Constants.BeforeAscendantSeasons.Contains(seasonData[2]))
                                 pprank = PPAct.CompetitiveTier + 3;
                             else
                                 pprank = PPAct.CompetitiveTier;
@@ -739,7 +739,7 @@ public class LiveMatch
 
             try
             {
-                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData.PreviouspreviouspreviousSeason.ToString(), out var pppActJsonElement))
+                if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act.TryGetValue(seasonData[3].ToString(), out var pppActJsonElement))
                 {
                     var PPPAct = pppActJsonElement.Deserialize<ActInfo>();
                     switch (PPPAct.CompetitiveTier)
@@ -749,7 +749,7 @@ public class LiveMatch
                             break;
                         case > 20:
                         {
-                            if (Constants.BeforeAscendantSeasons.Contains(seasonData.PreviouspreviouspreviousSeason))
+                            if (Constants.BeforeAscendantSeasons.Contains(seasonData[3]))
                                 ppprank = PPPAct.CompetitiveTier + 3;
                             else
                                 ppprank = PPPAct.CompetitiveTier;
@@ -773,7 +773,7 @@ public class LiveMatch
             if (rank >= 24)
             {
                 var leaderboardResponse = await DoCachedRequestAsync(Method.Get,
-                    $"https://pd.{Constants.Shard}.a.pvp.net/mmr/v1/leaderboards/affinity/{Constants.Region}/queue/competitive/season/{seasonData.CurrentSeason}?startIndex=0&size=0",
+                    $"https://pd.{Constants.Shard}.a.pvp.net/mmr/v1/leaderboards/affinity/{Constants.Region}/queue/competitive/season/{seasonData[0]}?startIndex=0&size=0",
                     true).ConfigureAwait(false);
                 if (leaderboardResponse.Content != null && leaderboardResponse.IsSuccessful)
                 {
@@ -826,9 +826,9 @@ public class LiveMatch
         return rankData;
     }
 
-    private static async Task<SeasonData> GetSeasonsAsync()
+    private static async Task<Guid[]> GetSeasonsAsync()
     {
-        var seasonData = new SeasonData();
+        var seasonData = new Guid[4];
         try
         {
             RestClient client = new($"https://shared.{Constants.Region}.a.pvp.net/content-service/v3/content");
@@ -841,58 +841,30 @@ public class LiveMatch
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
             });
             var response = await client.ExecuteGetAsync<ContentResponse>(request).ConfigureAwait(false);
-            sbyte index = 0;
-            sbyte currentindex = 0;
 
             if (!response.IsSuccessful)
             {
                 Constants.Log.Error("GetSeasonsAsync Failed: {e}", response.ErrorException);
                 return seasonData;
             }
+            
+            sbyte index = 0;
+            var seasons = response.Data.Seasons.Reverse();
+            var acts = seasons.Where(season => season.Type == "act");
 
-            foreach (var season in response.Data.Seasons)
+            foreach (var act in acts)
             {
-                if (season.IsActive & (season.Type == "act"))
+                if (index >= seasonData.Length) break;
+                if (index > 0)
                 {
-                    seasonData.CurrentSeason = season.Id;
-                    currentindex = index;
-                    break;
+                    seasonData[index] = act.Id;
+                    index++;
                 }
-
-                index++;
-            }
-
-            currentindex--;
-            if (response.Data.Seasons[currentindex].Type == "act")
-            {
-                seasonData.PreviousSeason = response.Data.Seasons[currentindex].Id;
-            }
-            else
-            {
-                currentindex--;
-                seasonData.PreviousSeason = response.Data.Seasons[currentindex].Id;
-            }
-
-            currentindex--;
-            if (response.Data.Seasons[currentindex].Type == "act")
-            {
-                seasonData.PreviouspreviousSeason = response.Data.Seasons[currentindex].Id;
-            }
-            else
-            {
-                currentindex--;
-                seasonData.PreviouspreviousSeason = response.Data.Seasons[currentindex].Id;
-            }
-
-            currentindex--;
-            if (response.Data.Seasons[currentindex].Type == "act")
-            {
-                seasonData.PreviouspreviouspreviousSeason = response.Data.Seasons[currentindex].Id;
-            }
-            else
-            {
-                currentindex--;
-                seasonData.PreviouspreviouspreviousSeason = response.Data.Seasons[currentindex].Id;
+                if (index == 0 & act.IsActive)
+                {
+                    seasonData[0] = act.Id;
+                    index++;
+                }
             }
         }
         catch (Exception e)
