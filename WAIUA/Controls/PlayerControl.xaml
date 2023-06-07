@@ -244,10 +244,10 @@
 				VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Columns="3" Rows="1">
 				<Border CornerRadius="50" VerticalAlignment="Stretch" Padding="4"
 				        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-				        Background="{Binding PlayerCell.MatchHistoryData.PreviouspreviouspreviousGameColour, ElementName=Self}"
+				        Background="{Binding PlayerCell.MatchHistoryData.PreviousGameColours[2], ElementName=Self}"
 				        BorderThickness="0">
 					<TextBlock FontFamily="{StaticResource Nunito}" FontStretch="UltraCondensed"
-					           Text="{Binding PlayerCell.MatchHistoryData.PreviouspreviouspreviousGame, ElementName=Self}"
+					           Text="{Binding PlayerCell.MatchHistoryData.PreviousGames[2], ElementName=Self}"
 					           Foreground="#252A40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
 					<Border.Effect>
 						<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
@@ -255,10 +255,10 @@
 				</Border>
 				<Border CornerRadius="50" VerticalAlignment="Stretch" Margin="2, 0" Padding="4"
 				        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-				        Background="{Binding PlayerCell.MatchHistoryData.PreviouspreviousGameColour, ElementName=Self}"
+				        Background="{Binding PlayerCell.MatchHistoryData.PreviousGameColours[1], ElementName=Self}"
 				        BorderThickness="0">
 					<TextBlock FontFamily="{StaticResource Nunito}" FontStretch="UltraCondensed"
-					           Text="{Binding PlayerCell.MatchHistoryData.PreviouspreviousGame, ElementName=Self}"
+					           Text="{Binding PlayerCell.MatchHistoryData.PreviousGames[1], ElementName=Self}"
 					           Foreground="#252A40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
 					<Border.Effect>
 						<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
@@ -266,10 +266,10 @@
 				</Border>
 				<Border CornerRadius="50" VerticalAlignment="Stretch" Padding="4"
 				        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-				        Background="{Binding PlayerCell.MatchHistoryData.PreviousGameColour, ElementName=Self}"
+				        Background="{Binding PlayerCell.MatchHistoryData.PreviousGameColours[0], ElementName=Self}"
 				        BorderThickness="0">
 					<TextBlock FontFamily="{StaticResource Nunito}" FontStretch="UltraCondensed"
-					           Text="{Binding PlayerCell.MatchHistoryData.PreviousGame, ElementName=Self}" Foreground="#252A40"
+					           Text="{Binding PlayerCell.MatchHistoryData.PreviousGames[0], ElementName=Self}" Foreground="#252A40"
 					           FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
 					<Border.Effect>
 						<DropShadowEffect BlurRadius="5" ShadowDepth="3" />

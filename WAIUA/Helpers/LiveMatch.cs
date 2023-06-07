@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -555,70 +555,50 @@ public class LiveMatch
     {
         MatchHistoryData history = new()
         {
-            PreviousGameColour = "#7f7f7f",
-            PreviouspreviousGameColour = "#7f7f7f",
-            PreviouspreviouspreviousGameColour = "#7f7f7f"
+            PreviousGameColours = new string[3] { "#7f7f7f", "#7f7f7f", "#7f7f7f"},
+            PreviousGames = new int[3]
         };
 
         try
         {
-            if (puuid != Guid.Empty)
-            {
-                var response = await DoCachedRequestAsync(Method.Get,
-                    $"https://pd.{Constants.Region}.a.pvp.net/mmr/v1/players/{puuid}/competitiveupdates?queue=competitive",
-                    true).ConfigureAwait(false);
-                if (!response.IsSuccessful)
-                {
-                    Constants.Log.Error("GetMatchHistoryAsync request failed: {e}", response.ErrorException);
-                    return history;
-                }
-
-                var options = new JsonSerializerOptions
-                {
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                };
-                var content = JsonSerializer.Deserialize<CompetitiveUpdatesResponse>(response.Content, options);
-
-                if (content?.Matches.Length > 0)
-                {
-                    history.RankProgress = content.Matches[0].RankedRatingAfterUpdate;
-                    var pmatch = content.Matches[0].RankedRatingEarned;
-                    history.PreviousGame = Math.Abs(pmatch);
-                    history.PreviousGameColour = pmatch switch
-                    {
-                        > 0 => "#32e2b2",
-                        < 0 => "#ff4654",
-                        _ => "#7f7f7f"
-                    };
-                }
-
-                if (content?.Matches.Length > 1)
-                {
-                    var ppmatch = content.Matches[1].RankedRatingEarned;
-                    history.PreviouspreviousGame = Math.Abs(ppmatch);
-                    history.PreviouspreviousGameColour = ppmatch switch
-                    {
-                        > 0 => "#32e2b2",
-                        < 0 => "#ff4654",
-                        _ => "#7f7f7f"
-                    };
-                }
-
-                if (content?.Matches.Length > 2)
-                {
-                    var pppmatch = content.Matches[2].RankedRatingEarned;
-                    history.PreviouspreviouspreviousGame = Math.Abs(pppmatch);
-                    history.PreviouspreviouspreviousGameColour = pppmatch switch
-                    {
-                        > 0 => "#32e2b2",
-                        < 0 => "#ff4654",
-                        _ => "#7f7f7f"
-                    };
-                }
-            }
-            else
+            if (puuid == Guid.Empty)
             {
                 Constants.Log.Error("GetMatchHistoryAsync: Puuid is null");
+                return history;
+            }
+            var response = await DoCachedRequestAsync(Method.Get,
+                $"https://pd.{Constants.Region}.a.pvp.net/mmr/v1/players/{puuid}/competitiveupdates?queue=competitive",
+                true).ConfigureAwait(false);
+            if (!response.IsSuccessful)
+            {
+                Constants.Log.Error("GetMatchHistoryAsync request failed: {e}", response.ErrorException);
+                return history;
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+            };
+            var content = JsonSerializer.Deserialize<CompetitiveUpdatesResponse>(response.Content, options);
+
+            if (content?.Matches.Length == 0)
+            {
+                return history;
+            }
+
+            history.RankProgress = content.Matches[0].RankedRatingAfterUpdate;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (i > content.Matches.Length) break;
+                var match = content.Matches[i].RankedRatingEarned;
+                history.PreviousGames[i] = Math.Abs(match);
+                history.PreviousGameColours[i] = match switch
+                {
+                    > 0 => "#32e2b2",
+                    < 0 => "#ff4654",
+                    _ => "#7f7f7f"
+                };
             }
         }
         catch (Exception e)

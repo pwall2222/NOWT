@@ -99,12 +99,8 @@ public partial class RankData
 [INotifyPropertyChanged]
 public partial class MatchHistoryData
 {
-    [ObservableProperty] private int _previousGame;
-    [ObservableProperty] private string _previousGameColour;
-    [ObservableProperty] private int _previouspreviousGame;
-    [ObservableProperty] private string _previouspreviousGameColour;
-    [ObservableProperty] private int _previouspreviouspreviousGame;
-    [ObservableProperty] private string _previouspreviouspreviousGameColour;
+    [ObservableProperty] private int[] _previousGames;
+    [ObservableProperty] private string[] _previousGameColours;
     [ObservableProperty] private int _rankProgress;
 }
 
