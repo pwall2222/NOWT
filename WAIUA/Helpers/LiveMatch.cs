@@ -67,7 +67,6 @@ public class LiveMatch
         return true;
     }
 
-
     public static async Task<bool> LiveMatchChecksAsync()
     {
         if (await Checks.CheckLoginAsync().ConfigureAwait(false))
@@ -552,7 +551,6 @@ public class LiveMatch
         return skinData;
     }
 
-
     public static async Task<MatchHistoryData> GetMatchHistoryAsync(Guid puuid)
     {
         MatchHistoryData history = new()
@@ -774,7 +772,6 @@ public class LiveMatch
         }
         return null;
     }
-
 
     private static async Task<PresencesResponse> GetPresencesAsync()
     {
