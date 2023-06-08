@@ -22,7 +22,7 @@ public partial class App : Application
     {
         Dispatcher.UnhandledException += OnDispatcherUnhandledException;
 
-        WindowPlace = new WindowPlace(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\WAIUA\\placement.config");
+        WindowPlace = new WindowPlace(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NOWT\\placement.config");
 
         if (string.IsNullOrEmpty(Settings.Default.Language))
         {
@@ -51,7 +51,7 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        Constants.LocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\WAIUA";
+        Constants.LocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NOWT";
         Constants.Log = new LoggerConfiguration().MinimumLevel.Debug()
             .WriteTo.Async(a => a.File(Constants.LocalAppDataPath + "\\logs\\log.txt", shared: true, rollingInterval: RollingInterval.Day))
             .CreateLogger();

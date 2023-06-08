@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -612,6 +612,13 @@ public class LiveMatch
     private static async Task<RankData> GetPlayerHistoryAsync(Guid puuid, Guid[] seasonData)
     {
         var rankData = new RankData();
+        var ranks = new int[4];
+
+        rankData.RankImages = new Uri[ranks.Length];
+        rankData.RankNames = new string[ranks.Length];
+        Array.Fill(rankData.RankImages, new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\ranksimg\\0.png"));
+        Array.Fill(rankData.RankNames, "UNRATED");
+
         if (puuid == Guid.Empty)
         {
             Constants.Log.Error("GetPlayerHistoryAsync Failed: PUUID is empty");
@@ -632,7 +639,12 @@ public class LiveMatch
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
         };
         var content = JsonSerializer.Deserialize<MmrResponse>(response.Content, options);
-        var ranks = new int[4];
+
+        if (content.QueueSkills.Competitive.SeasonalInfoBySeasonId is null) {
+            Constants.Log.Error("GetPlayerHistoryAsync Failed; seasonInfoById is null");
+            return rankData;
+        }
+
         var SeasonInfo = content.QueueSkills.Competitive.SeasonalInfoBySeasonId.Act;
         
         for (int i = 0; i < ranks.Length; i++)
@@ -674,9 +686,6 @@ public class LiveMatch
         try
         {
             var rankNames = JsonSerializer.Deserialize<Dictionary<int, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\competitivetiers.json").ConfigureAwait(false));
-
-            rankData.RankImages = new Uri[ranks.Length];
-            rankData.RankNames = new string[ranks.Length];
 
             for (int i = 0; i < ranks.Length; i++)
             {
