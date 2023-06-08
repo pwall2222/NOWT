@@ -159,10 +159,12 @@ public partial class MatchViewModel : ObservableObject
     {
         // List<Task> tasks = new();
         var AllPlayers = LeftPlayerList.Concat(RightPlayerList).ToList();
-        foreach (var player in AllPlayers)
+        foreach (var player in AllPlayers) {
+            if (player.PlayerUiData is null) continue;
             // var t1 = LiveMatch.GetMatchHistoryAsync(player.PlayerUiData.Puuid);
             // player.MatchHistoryData = t1.Result;
             player.MatchHistoryData = await LiveMatch.GetMatchHistoryAsync(player.PlayerUiData.Puuid).ConfigureAwait(false);
+        }
     }
 
     private void UpdatePercentage(int percentage)
