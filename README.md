@@ -1,22 +1,18 @@
 <p align="center">
-  <a href="https://github.com/Soneliem/WAIUA">
+  <a href="https://github.com/pwall2222/NOWT">
     <img src="Screenshots/logo.png" alt="Logo" width="80" height="80">
   </a>
 </p>
 <h3 align="center">WAIUA</h3>
 <h4 align="center">Who Am I Up Against?</h4>
-<a href="https://waiua.sonel.dev"><h1 align="center">waiua.sonel.dev</h1></a>
 
   <p align="center">
     A Windows application to view player ranks and other info in a live Valorant Match</p>
     <p align="center">
-    <a href="https://discord.gg/X7CYCeZSRK">
-      <img alt="Discord" src="https://img.shields.io/discord/881790284613185546?color=blue&label=discord">
-    </a>
-    <img alt="GitHub" src="https://img.shields.io/github/license/Soneliem/WAIUA?color=blue">
-    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Soneliem/WAIUA/total?color=blue">
-    <a href="https://github.com/Soneliem/WAIUA/releases/latest/download/WAIUA.exe">
-      <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Soneliem/WAIUA">
+    <img alt="GitHub" src="https://img.shields.io/github/license/pwall2222/NOWT?color=blue">
+    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/pwall2222/NOWT/total?color=blue">
+    <a href="https://github.com/pwall2222/NOWT/releases/latest/download/NOWT.exe">
+      <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/pwall2222/NOWT">
     </a>
     </p>
   <br />
@@ -65,9 +61,9 @@
 |:---:|:---:|:---:|:---:|
 |![name](Screenshots/name.png)|![skin](Screenshots/skin.png)|![party](Screenshots/party.png)|![translation](Screenshots/language.png)|
 
-|Tracker.gg Intergration|Mini-Aim Trainer|Support For all Game Modes|Auto Refresh and Updates|
+|Tracker.gg Intergration||Support For all Game Modes|Auto Refresh and Updates|
 |:---:|:---:|:---:|:---:|
-|![tracker](Screenshots/tracker.png)|![trainer](Screenshots/trainer.png)|![mode](Screenshots/mode.png)|![refresh](Screenshots/refresh.png)|
+|![tracker](Screenshots/tracker.png)||![mode](Screenshots/mode.png)|![refresh](Screenshots/refresh.png)|
 
 ## Getting Started
 
@@ -80,19 +76,19 @@ To get the app up and running follow these simple steps.
 
 ### Installation
 
-1. Download [the latest installer](https://github.com/Soneliem/WAIUA/releases/latest/download/WAIUA.exe)
+1. Download [the latest installer](https://github.com/pwall2222/releases/latest/download/NOWT.exe)
 2. Run the .exe (If a blue box saying "Windows protected your PC" shows up, click `More Info` and then `Run Anyway`)
-3. Follow the steps to install WAIUA
+3. Follow the steps to install NOWT
 
 ## Usage
 
 1. Open the app
-2. WAIUA will automatically check for new matches or wait for a match like a good boi
+2. NOWT will automatically check for new matches or wait for a match like a good boi
 3. Win games (unless you find out you're playing against a smurf. In that case RIP your RR)
 
 ## Roadmap and Known Bugs
 
-Please check the [issues tab](https://github.com/Soneliem/WAIUA/issues) before making a new issue. My [Discord Server](https://discord.gg/X7CYCeZSRK) has a list of known bugs and upcoming features.
+Please check the [issues tab](https://github.com/pwall2222/NOWT/issues) before making a new issue. My [Discord Server](https://discord.gg/X7CYCeZSRK) has a list of known bugs and upcoming features.
 
 ## Built With
 
