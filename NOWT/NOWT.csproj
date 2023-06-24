@@ -21,10 +21,9 @@
         <StartupObject>WAIUA.App</StartupObject>
         <Description>A Windows app to view player ranks and stats in a live Valorant Match</Description>
         <Copyright>Soneliem,PWall</Copyright>
-        <PackageProjectUrl>https://waiua.sonel.dev</PackageProjectUrl>
         <PackageIcon>logo.png</PackageIcon>
         <PackageIconUrl />
-        <RepositoryUrl>https://github.com/Soneliem/WAIUA</RepositoryUrl>
+        <RepositoryUrl>https://github.com/pwall2222/NOWT</RepositoryUrl>
         <NeutralLanguage>en</NeutralLanguage>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Authors>Soneliem,PWall</Authors>
