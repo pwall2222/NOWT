@@ -24,6 +24,11 @@ jobs:
           -p:PublishSingleFile=true
           --self-contained false -r win-x64
           -o ./inno
+      - name: Download netcorecheck
+        shell: pwsh
+        run: |
+          wget https://go.microsoft.com/fwlink/?linkid=2135256 -O netcorecheck.exe
+          wget https://go.microsoft.com/fwlink/?linkid=2135504 -O netcorecheck_x64.exe
       - name: Package installer
         uses: nadeemjazmawe/inno-setup-action-cli@v6.0.5
         with:
