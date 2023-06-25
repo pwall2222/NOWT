@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
-namespace WAIUA;
+namespace NOWT;
 
 public class ViewModelPresenter : ContentControl
 {

@@ -160,7 +160,7 @@
     <value>자동 로그인</value>
   </data>
   <data name="AutoLoginExplanation" xml:space="preserve">
-    <value>주의: WAIUA를 사용하려면 발로란트가 실행중이어야 합니다.</value>
+    <value>주의: NOWT를 사용하려면 발로란트가 실행중이어야 합니다.</value>
   </data>
   <data name="AuthStatusFail" xml:space="preserve">
     <value>인증 실패</value>

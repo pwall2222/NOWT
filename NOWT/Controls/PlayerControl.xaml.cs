@@ -4,9 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using WAIUA.Objects;
+using NOWT.Objects;
 
-namespace WAIUA.Controls;
+namespace NOWT.Controls;
 
 public partial class PlayerControl : UserControl
 {

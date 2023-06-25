@@ -7,12 +7,12 @@ using System.Windows.Threading;
 using FontAwesome6;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using WAIUA.Helpers;
-using WAIUA.Objects;
-using WAIUA.Views;
-using static WAIUA.Helpers.Login;
+using NOWT.Helpers;
+using NOWT.Objects;
+using NOWT.Views;
+using static NOWT.Helpers.Login;
 
-namespace WAIUA.ViewModels;
+namespace NOWT.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {

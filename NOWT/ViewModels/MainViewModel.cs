@@ -2,7 +2,7 @@
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 
-namespace WAIUA.ViewModels;
+namespace NOWT.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {

@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using WAIUA.ViewModels;
+using NOWT.ViewModels;
 
-namespace WAIUA;
+namespace NOWT;
 
 public partial class MainWindow : Window
 {

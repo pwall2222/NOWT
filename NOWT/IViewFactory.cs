@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WAIUA;
+namespace NOWT;
 
 public interface IViewFactory
 {

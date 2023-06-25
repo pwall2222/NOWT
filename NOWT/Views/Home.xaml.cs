@@ -2,9 +2,9 @@
 using System.Windows.Controls;
 using System.Windows.Threading;
 using FontAwesome6.Fonts;
-using WAIUA.ViewModels;
+using NOWT.ViewModels;
 
-namespace WAIUA.Views;
+namespace NOWT.Views;
 
 public partial class Home : UserControl
 {

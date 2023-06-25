@@ -1,6 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace WAIUA.ViewModels;
+namespace NOWT.ViewModels;
 
 public class SettingsViewModel : ObservableObject
 {

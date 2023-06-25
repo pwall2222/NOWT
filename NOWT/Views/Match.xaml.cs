@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using WAIUA.ViewModels;
+using NOWT.ViewModels;
 
-namespace WAIUA.Views;
+namespace NOWT.Views;
 
 /// <summary>
 ///     Interaction logic for Match.xaml

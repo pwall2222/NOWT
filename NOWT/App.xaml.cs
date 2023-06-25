@@ -9,12 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using RestoreWindowPlace;
 using Serilog;
-using WAIUA.Helpers;
-using WAIUA.Properties;
-using WAIUA.ViewModels;
-using static WAIUA.Helpers.ValApi;
+using NOWT.Helpers;
+using NOWT.Properties;
+using NOWT.ViewModels;
+using static NOWT.Helpers.ValApi;
 
-namespace WAIUA;
+namespace NOWT;
 
 public partial class App : Application
 {
@@ -72,7 +72,7 @@ public partial class App : Application
                 .BuildServiceProvider());
 
         AutoUpdater.ShowSkipButton = false;
-        AutoUpdater.Start("https://raw.githubusercontent.com/Soneliem/WAIUA/master/WAIUA/VersionInfo.xml");
+        AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/master/NOWT/VersionInfo.xml");
 
         MainWindow = new MainWindow();
         MainWindow.Show();

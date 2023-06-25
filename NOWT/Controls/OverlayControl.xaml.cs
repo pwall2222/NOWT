@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using WAIUA.Objects;
+using NOWT.Objects;
 
-namespace WAIUA.Controls;
+namespace NOWT.Controls;
 
 /// <summary>
 ///     Interaction logic for OverlayControl.xaml

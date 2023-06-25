@@ -2,7 +2,7 @@
 using System.Windows;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace WAIUA.Objects;
+namespace NOWT.Objects;
 
 [INotifyPropertyChanged]
 public partial class IgnData

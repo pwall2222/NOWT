@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using RestSharp;
-using WAIUA.Objects;
+using NOWT.Objects;
 
-namespace WAIUA.Helpers;
+namespace NOWT.Helpers;
 
 public static class Login
 {

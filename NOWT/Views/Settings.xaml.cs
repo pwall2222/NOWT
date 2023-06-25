@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -10,12 +10,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
 using AutoUpdaterDotNET;
-using WAIUA.Helpers;
-using WAIUA.Properties;
-using static WAIUA.Helpers.Login;
-using static WAIUA.Helpers.ValApi;
+using NOWT.Helpers;
+using NOWT.Properties;
+using static NOWT.Helpers.Login;
+using static NOWT.Helpers.ValApi;
 
-namespace WAIUA.Views;
+namespace NOWT.Views;
 
 public partial class Settings : UserControl
 {

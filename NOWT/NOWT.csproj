@@ -18,7 +18,7 @@
         <ApplicationIcon>logo.ico</ApplicationIcon>
         <Version>1.0.0</Version>
         <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-        <StartupObject>WAIUA.App</StartupObject>
+        <StartupObject>NOWT.App</StartupObject>
         <Description>A Windows app to view player ranks and stats in a live Valorant Match</Description>
         <Copyright>Soneliem,PWall</Copyright>
         <PackageIcon>logo.png</PackageIcon>

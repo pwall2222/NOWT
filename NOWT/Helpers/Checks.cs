@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
 
-namespace WAIUA.Helpers;
+namespace NOWT.Helpers;
 
 public class Checks
 {

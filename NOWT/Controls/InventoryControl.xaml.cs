@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using WAIUA.Objects;
+using NOWT.Objects;
 
-namespace WAIUA.Controls;
+namespace NOWT.Controls;
 
 public partial class InventoryControl : UserControl
 {

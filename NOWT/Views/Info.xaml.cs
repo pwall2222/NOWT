@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 
-namespace WAIUA.Views;
+namespace NOWT.Views;
 
 public partial class Info : UserControl
 {

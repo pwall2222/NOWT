@@ -6,10 +6,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using RestSharp;
-using WAIUA.Objects;
-using Settings = WAIUA.Properties.Settings;
+using NOWT.Objects;
+using Settings = NOWT.Properties.Settings;
 
-namespace WAIUA.Helpers;
+namespace NOWT.Helpers;
 
 public static class ValApi
 {

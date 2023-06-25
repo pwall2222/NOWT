@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace WAIUA.Controls;
+namespace NOWT.Controls;
 
 public partial class InventoryEntryControl : UserControl
 {

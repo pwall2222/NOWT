@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using RestSharp;
 using Serilog.Core;
 
-namespace WAIUA.Helpers;
+namespace NOWT.Helpers;
 
 public static class Constants
 {

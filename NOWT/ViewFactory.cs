@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace WAIUA;
+namespace NOWT;
 // public class MappingViewFactory : IViewFactory
 // {
 //     private readonly Dictionary<Type, Type> _mapping = new();

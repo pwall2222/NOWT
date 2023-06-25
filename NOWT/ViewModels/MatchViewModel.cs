@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using WAIUA.Helpers;
-using WAIUA.Objects;
+using NOWT.Helpers;
+using NOWT.Objects;
 
-namespace WAIUA.ViewModels;
+namespace NOWT.ViewModels;
 
 public partial class MatchViewModel : ObservableObject
 {

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WAIUA.Converters;
+namespace NOWT.Converters;
 
 [ValueConversion(typeof(bool), typeof(bool))]
 public class InverseBooleanConverter : IValueConverter

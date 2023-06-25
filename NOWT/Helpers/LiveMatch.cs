@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using RestSharp;
 using RestSharp.Serializers.Json;
-using WAIUA.Objects;
-using WAIUA.Properties;
-using static WAIUA.Helpers.Login;
+using NOWT.Objects;
+using NOWT.Properties;
+using static NOWT.Helpers.Login;
 
-namespace WAIUA.Helpers;
+namespace NOWT.Helpers;
 
 public class LiveMatch
 {
