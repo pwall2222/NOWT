@@ -868,7 +868,7 @@ public class LiveMatch
 
             MatchInfo.GameMode = gameModeName;
 
-            if (gameModeName == "")
+            if (string.IsNullOrEmpty(gameModeName))
             {
                 var gamemodes = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\gamemode.json").ConfigureAwait(false));
                 gamemodes.TryGetValue(gameModeId, out var gamemode);
