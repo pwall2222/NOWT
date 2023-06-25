@@ -746,7 +746,7 @@ public class LiveMatch
 
     private static async Task<Uri> TrackerAsync(string username)
     {
-        if (!string.IsNullOrEmpty(username)) return null;
+        if (string.IsNullOrEmpty(username)) return null;
         try
         {
             var encodedUsername = Uri.EscapeDataString(username);
