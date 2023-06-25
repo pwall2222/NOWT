@@ -32,7 +32,7 @@ jobs:
           Invoke-WebRequest -URI https://go.microsoft.com/fwlink/?linkid=2135256 -OutFile .\inno\netcorecheck.exe
           Invoke-WebRequest -URI https://go.microsoft.com/fwlink/?linkid=2135504 -OutFile .\inno\netcorecheck_x64.exe
       - name: Download InnoSetup
-        uses: pwall2222/inno-setup-download@v0.0.1
+        uses: pwall2222/inno-setup-download@v0.0.4
       - name: Package application
         run: ISCC.exe ./NOWT.iss
       - name: Rename installer
