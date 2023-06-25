@@ -29,8 +29,8 @@ jobs:
       - name: Download netcorecheck
         shell: pwsh
         run: |
-          Invoke-WebRequest -URI https://go.microsoft.com/fwlink/?linkid=2135256 -OutFile netcorecheck.exe
-          Invoke-WebRequest -URI https://go.microsoft.com/fwlink/?linkid=2135504 -OutFile netcorecheck_x64.exe
+          Invoke-WebRequest -URI https://go.microsoft.com/fwlink/?linkid=2135256 -OutFile .\inno\netcorecheck.exe
+          Invoke-WebRequest -URI https://go.microsoft.com/fwlink/?linkid=2135504 -OutFile .\inno\netcorecheck_x64.exe
       - name: Package installer
         uses: nadeemjazmawe/inno-setup-action-cli@v6.0.5
         with:
