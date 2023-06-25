@@ -16,6 +16,8 @@ jobs:
         with:
           token: ${{ github.token }}
           branch: main
+          noVersionBumpBehavior: current
+          skipInvalidTags: true
       - name: Replace version
         if: ${{ steps.semver.outputs.next != steps.semver.outputs.current }}
         run: |
