@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}
       - name: Get Next Version
         id: semver
         uses: ietf-tools/semver-action@v1
