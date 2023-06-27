@@ -41,4 +41,4 @@ jobs:
   build:
     needs: deploy
     uses: pwall2222/NOWT/.github/workflows/build.yml@main
-    if: jobs.deploy.outputs.newVersion
+    if: ${{ needs.deploy.outputs.newVersion }}
