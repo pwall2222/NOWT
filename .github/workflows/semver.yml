@@ -19,7 +19,7 @@ jobs:
           noVersionBumpBehavior: current
           skipInvalidTags: true
       - name: Replace version
-        if: ${{ steps.semver.outputs.next != steps.semver.outputs.current }}
+        if: steps.semver.outputs.next != steps.semver.outputs.current
         run: |
           sed -i "s/\(MyAppVersion\) '.*'/\1 '$next'/" NOWT.iss
           sed -i "s/\(<AssemblyVersion>\).*</\1$major.0.0</" NOWT/NOWT.csproj
@@ -30,7 +30,7 @@ jobs:
           next: ${{ steps.semver.outputs.nextStrict }}
           major: ${{ steps.semver.outputs.nextMajorStrict }}
       - name: Push new version to repo
-        if: ${{ steps.semver.outputs.next != steps.semver.outputs.current }}
+        if: steps.semver.outputs.next != steps.semver.outputs.current
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore: bump version to ${{ steps.semver.outputs.next }}"
