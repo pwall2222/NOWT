@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PAT }}
       - name: Get Next Version
         id: semver
         uses: ietf-tools/semver-action@v1
@@ -38,3 +36,6 @@ jobs:
           commit_message: "chore: bump version to ${{ steps.semver.outputs.next }}"
           file_pattern: "*.csproj *.xml *.iss"
           tagging_message: ${{ steps.semver.outputs.next }}
+      - name: Build artifacts and create release
+        if: ${{ steps.semver.outputs.next != steps.semver.outputs.current }}
+        uses: pwall2222/NOWT/.github/workflows/build.yml@main
