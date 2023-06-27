@@ -7,7 +7,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     outputs:
-      newVersion: ${{ steps.semver.outputs.next != steps.semver.outputs.current }}
+      next: ${{ steps.semver.outputs.next }}
+      current: ${{ steps.semver.outputs.current }}
 
     steps:
       - name: Checkout Code
@@ -41,4 +42,4 @@ jobs:
   build:
     needs: deploy
     uses: pwall2222/NOWT/.github/workflows/build.yml@main
-    if: ${{ needs.deploy.outputs.newVersion }}
+    if: needs.deploy.outputs.current != needs.deploy.outputs.next
