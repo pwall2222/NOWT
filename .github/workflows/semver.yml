@@ -43,3 +43,5 @@ jobs:
     needs: deploy
     uses: pwall2222/NOWT/.github/workflows/build.yml@main
     if: needs.deploy.outputs.current != needs.deploy.outputs.next
+    with:
+      tag: ${{ needs.deploy.outputs.next }}

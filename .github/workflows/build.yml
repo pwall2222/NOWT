@@ -5,6 +5,10 @@ on:
     tags:
       - "v*.*.*"
   workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
 
 jobs:
   build:
@@ -46,3 +50,4 @@ jobs:
           files: |
             ./inno/out/NOWT-Installer.exe
             ./inno/NOWT.exe
+          tag_name: ${{ inputs.tag || github.ref }}
