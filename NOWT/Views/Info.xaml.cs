@@ -15,8 +15,8 @@ public partial class Info : UserControl
 
     private void HandleLinkClickAsync(object sender, RequestNavigateEventArgs e)
     {
-        var hl = (Hyperlink) sender;
-        var navigateUri = hl.NavigateUri.ToString();
+        var link = (Hyperlink) sender;
+        var navigateUri = link.NavigateUri.ToString();
         Process.Start(new ProcessStartInfo(navigateUri) {UseShellExecute = true});
         e.Handled = true;
     }
