@@ -26,13 +26,13 @@ public partial class Home : UserControl
 
     private void DataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
     {
-        if (e.NewValue is HomeViewModel viewModel)
-            viewModel.GoMatchEvent += () =>
+        if (e.NewValue is not HomeViewModel viewModel) return;
+        viewModel.GoMatchEvent += () =>
+        {
+            Dispatcher.Invoke(() =>
             {
-                Dispatcher.Invoke(() =>
-                {
-                    if (GoMatch.Command.CanExecute(null)) GoMatch.Command.Execute(null);
-                });
-            };
+                if (GoMatch.Command.CanExecute(null)) GoMatch.Command.Execute(null);
+            });
+        };
     }
 }
