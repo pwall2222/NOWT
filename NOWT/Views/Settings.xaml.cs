@@ -36,8 +36,10 @@ public partial class Settings : UserControl
 
     private async void Button_Click1Async(object sender, RoutedEventArgs e)
     {
-        CurrentVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        string ProductVersion = System.Windows.Forms.Application.ProductVersion;
+        CurrentVersion.Text = ProductVersion;
         LatestVersion.Text = await GetLatestVersionAsync().ConfigureAwait(false);
+        AutoUpdater.InstalledVersion = new Version(ProductVersion);
         AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/master/NOWT/VersionInfo.xml");
         await CheckAndUpdateJsonAsync().ConfigureAwait(false);
     }
