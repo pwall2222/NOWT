@@ -40,14 +40,14 @@ public partial class Settings : UserControl
         CurrentVersion.Text = ProductVersion;
         LatestVersion.Text = await GetLatestVersionAsync().ConfigureAwait(false);
         AutoUpdater.InstalledVersion = new Version(ProductVersion);
-        AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/master/NOWT/VersionInfo.xml");
+        AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/main/NOWT/VersionInfo.xml");
         await CheckAndUpdateJsonAsync().ConfigureAwait(false);
     }
 
     private static Task<string> GetLatestVersionAsync()
     {
         var xml = new XmlDocument();
-        xml.Load("https://raw.githubusercontent.com/pwall2222/NOWT/master/NOWT/VersionInfo.xml");
+        xml.Load("https://raw.githubusercontent.com/pwall2222/NOWT/main/NOWT/VersionInfo.xml");
         var result = xml.GetElementsByTagName("version");
         return Task.FromResult(result[0].InnerText);
     }

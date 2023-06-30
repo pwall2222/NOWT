@@ -73,7 +73,7 @@ public partial class App : Application
 
         AutoUpdater.ShowSkipButton = false;
         AutoUpdater.InstalledVersion = new Version(System.Windows.Forms.Application.ProductVersion);
-        AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/master/NOWT/VersionInfo.xml");
+        AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/main/NOWT/VersionInfo.xml");
 
         MainWindow = new MainWindow();
         MainWindow.Show();
