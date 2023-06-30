@@ -41,7 +41,7 @@ jobs:
           tagging_message: ${{ steps.semver.outputs.next }}
   build:
     needs: deploy
-    uses: pwall2222/NOWT/.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
     if: needs.deploy.outputs.current != needs.deploy.outputs.next
     with:
       tag: ${{ needs.deploy.outputs.next }}
