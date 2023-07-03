@@ -1,10 +1,10 @@
 <p align="center">
   <a href="https://github.com/pwall2222/NOWT">
-    <img src="Screenshots/logo.png" alt="Logo" width="80" height="80">
+    <img src="NOWT/Assets/logo.png" alt="Logo" width="80" height="80">
   </a>
 </p>
-<h3 align="center">WAIUA</h3>
-<h4 align="center">Who Am I Up Against?</h4>
+<h3 align="center">NOWT</h3>
+<h4 align="center">New Opponent Who This?</h4>
 
   <p align="center">
     A Windows application to view player ranks and other info in a live Valorant Match</p>
@@ -16,8 +16,6 @@
     </a>
     </p>
   <br />
-
-![Screenshot](Screenshots/main.png)
 
 <details open="open">
   <summary>Table of Contents</summary>
@@ -49,7 +47,7 @@
 
 ## About The Project
 
-"Who Am I Up Against?" (WAIUA) is simple Windows app that lets you see the ranks, recent game stats and other info of players in a live Valorant match while you're still playing it. Below are the current features that are in the app.
+"New Opponent Who This?" (NOWT) is simple Windows app that lets you see the ranks, recent game stats and other info of players in a live Valorant match while you're still playing it. Below are the current features that are in the app.
 
 ### Current Features
 
@@ -104,7 +102,7 @@ I knew none of these things before making this lol
 * [System.Text.Json](https://docs.microsoft.com/en-us/dotnet/api/system.text.json) to deserialise JSON. Source generators are a Godsend
 * [Windows Community Toolkit MVVM](https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/introduction) for MVVM. Ty for Source Generators too
 * [AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET) for auto updates
-* [Inno Setup](https://jrsoftware.org/isinfo.php) to install WAIUA
+* [Inno Setup](https://jrsoftware.org/isinfo.php) to install NOWT
 * [FontAwesome](https://fontawesome.com/license) for icons. I'm also supposed say that I changed the colours so here it is
 
 ## Why I Made This
@@ -127,7 +125,7 @@ Thank you for your support! Any donation of $5 and over will get you into the ap
 
 ## Translations
 
-WAIUA Supports full localization and instructions to help with translations can be found in [Localization](./Localization.md)
+NOWT Supports full localization and instructions to help with translations can be found in [Localization](./Localization.md)
 
 ## Acknowledgements
 
