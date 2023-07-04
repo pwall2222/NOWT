@@ -374,20 +374,19 @@ public class LiveMatch
     private static async Task<IdentityData> GetAgentInfoAsync(Guid agentid)
     {
         IdentityData identityData = new();
-        if (agentid != Guid.Empty)
-        {
-            identityData.Image = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\agentsimg\\{agentid}.png");
-            var agents = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\agents.json").ConfigureAwait(false));
-            agents.TryGetValue(agentid, out var agentName);
-            identityData.Name = agentName;
-        }
-        else
+
+        if (agentid == Guid.Empty)
         {
             Constants.Log.Error("GetAgentInfoAsync Failed: AgentID is empty");
             identityData.Image = null;
             identityData.Name = "";
+            return identityData;
         }
-
+        
+        identityData.Image = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\agentsimg\\{agentid}.png");
+        var agents = JsonSerializer.Deserialize<Dictionary<Guid, string>>(await File.ReadAllTextAsync(Constants.LocalAppDataPath + "\\ValAPI\\agents.json").ConfigureAwait(false));
+        agents.TryGetValue(agentid, out var agentName);
+        identityData.Name = agentName;
         return identityData;
     }
 
