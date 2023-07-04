@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore
       - name: Build
         run: >
-          dotnet publish
+          dotnet publish .\NOWT\NOWT.csproj
           --configuration Release
           -p:PublishSingleFile=true
           --self-contained false -r win-x64
