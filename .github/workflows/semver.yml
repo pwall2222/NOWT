@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  deploy:
+  bump:
     runs-on: ubuntu-latest
     outputs:
       next: ${{ steps.semver.outputs.next }}
