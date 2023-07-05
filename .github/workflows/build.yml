@@ -47,6 +47,13 @@ jobs:
         shell: pwsh
         run: |
           Rename-Item ./inno/out/NOWT.exe NOWT-Installer.exe
+      - name: Get CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1.8.1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ env.TAG }}
+          excludeTypes: chore,ci,build,docs,style
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
@@ -54,3 +61,6 @@ jobs:
             ./inno/out/NOWT-Installer.exe
             ./inno/NOWT.exe
           tag_name: ${{ env.TAG }}
+          body: |
+            https://img.shields.io/github/downloads/pwall2222/NOWT/${{ env.TAG }}/total
+            ${{ steps.changelog.output.changes }}
