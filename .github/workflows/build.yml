@@ -13,12 +13,14 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
-          ref: ${{ inputs.tag || github.ref }}
+          ref: ${{ env.TAG }}
       - name: Setup .NET Core SDK 6.0.x
         uses: actions/setup-dotnet@v3
         with:
@@ -51,4 +53,4 @@ jobs:
           files: |
             ./inno/out/NOWT-Installer.exe
             ./inno/NOWT.exe
-          tag_name: ${{ inputs.tag || github.ref }}
+          tag_name: ${{ env.TAG }}
