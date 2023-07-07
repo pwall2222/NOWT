@@ -53,6 +53,7 @@ jobs:
         with:
           token: ${{ github.token }}
           tag: ${{ env.TAG }}
+          writeToFile: false
           excludeTypes: chore,ci,build,docs,style
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -62,5 +63,5 @@ jobs:
             ./inno/NOWT.exe
           tag_name: ${{ env.TAG }}
           body: |
-            https://img.shields.io/github/downloads/pwall2222/NOWT/${{ env.TAG }}/total
-            ${{ steps.changelog.output.changes }}
+            ![Release downloads](https://img.shields.io/github/downloads/pwall2222/NOWT/${{ env.TAG }}/total)
+            ${{ steps.changelog.outputs.changes }}
