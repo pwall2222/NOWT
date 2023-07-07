@@ -217,7 +217,8 @@ public class LiveMatch
 
     private void SetServer(dynamic matchIdInfo) {
         var gamePodId = matchIdInfo.GamePodId;
-        var nameAvailable = Constants.GamePodsDictionary.TryGetValue(gamePodId, out string serverName);
+        var pods = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(Constants.LocalAppDataPath + "\\ValAPI\\gamepods.json"));
+        var nameAvailable = pods.TryGetValue(gamePodId, out string serverName);
         if (!nameAvailable) return;
         MatchInfo.Server = "🌍 " + serverName;
     }

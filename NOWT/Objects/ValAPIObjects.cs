@@ -297,3 +297,10 @@ public class ValApiGamemode
 
     [JsonPropertyName("assetPath")] public string AssetPath { get; set; }
 }
+
+public class ValApiLocresResponse
+{
+    [JsonPropertyName("status")] public long Status { get; set; }
+
+    [JsonPropertyName("data")] public Dictionary<string, Dictionary<string, string>> Data { get; set; }
+}

@@ -24,6 +24,7 @@ public static class ValApi
     private static Urls _cardsInfo;
     private static Urls _spraysInfo;
     private static Urls _gamemodeInfo;
+    private static Urls _podsInfo;
     private static List<Urls> _allInfo;
 
     private static readonly Dictionary<string, string> ValApiLanguages = new()
@@ -125,7 +126,13 @@ public static class ValApi
             Filepath = Constants.LocalAppDataPath + "\\ValAPI\\gamemode.json",
             Url = $"/gamemodes?language={language}"
         };
-        _allInfo = new List<Urls> {_mapsInfo, _agentsInfo, _ranksInfo, _versionInfo, _skinsInfo, _cardsInfo, _spraysInfo, _gamemodeInfo};
+        _podsInfo = new Urls
+        {
+            Name = "Gamepods",
+            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\gamepods.json",
+            Url = $"../internal/locres/{language}"
+        };
+        _allInfo = new List<Urls> {_mapsInfo, _agentsInfo, _ranksInfo, _versionInfo, _skinsInfo, _cardsInfo, _spraysInfo, _gamemodeInfo, _podsInfo};
         return Task.CompletedTask;
     }
 
@@ -361,9 +368,37 @@ public static class ValApi
                 }
             }
 
+            async Task UpdatePodsDictionary()
+            {
+                var podsRequest = new RestRequest(_podsInfo.Url);
+                var podsResponse = await Client.ExecuteGetAsync<ValApiLocresResponse>(podsRequest).ConfigureAwait(false);
+                if (podsResponse.IsSuccessful)
+                {
+                    Dictionary<string, string> podsDictionary = new();
+                    if (podsResponse.Data != null && podsResponse.Data.Data.ContainsKey("UI_GamePodStrings"))
+                    {
+                        podsDictionary = podsResponse.Data.Data["UI_GamePodStrings"];
+                    }
+                    if (Settings.Default.Language != "en")
+                    {
+                        var locresEnglishRequest = new RestRequest(_podsInfo.Url + "/../en-US");
+                        var locresEnglishREsponse = await Client.ExecuteGetAsync<ValApiLocresResponse>(locresEnglishRequest).ConfigureAwait(false);
+                        if (locresEnglishREsponse.Data != null && locresEnglishREsponse.Data.Data.ContainsKey("UI_GamePodStrings"))
+                            locresEnglishREsponse.Data.Data["UI_GamePodStrings"].ToList().ForEach(x => podsDictionary.TryAdd(x.Key, x.Value));
+                    }
+
+
+                    await File.WriteAllTextAsync(_podsInfo.Filepath, JsonSerializer.Serialize(podsDictionary)).ConfigureAwait(false);
+                }
+                else
+                {
+                    Constants.Log.Error("updatePodsDictionary Failed, Response:{error}", podsResponse.ErrorException);
+                }
+            }
+
             try
             {
-                await Task.WhenAll(UpdateVersion(), UpdateRanksDictionary(), UpdateAgentsDictionary(), UpdateMapsDictionary(), UpdateSkinsDictionary(), UpdateCardsDictionary(), UpdateSpraysDictionary(), UpdateGamemodeDictionary()).ConfigureAwait(false);
+                await Task.WhenAll(UpdateVersion(), UpdateRanksDictionary(), UpdateAgentsDictionary(), UpdateMapsDictionary(), UpdateSkinsDictionary(), UpdateCardsDictionary(), UpdateSpraysDictionary(), UpdateGamemodeDictionary(), UpdatePodsDictionary()).ConfigureAwait(false);
             }
             catch (Exception e)
             {
