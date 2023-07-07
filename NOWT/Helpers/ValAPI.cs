@@ -53,10 +53,14 @@ public static class ValApi
         MediaClient = new RestClient();
     }
 
+    private static async Task<RestResponse<T>> Fetch<T>(string url) {
+        var request = new RestRequest(url);
+        return await Client.ExecuteGetAsync<T>(request).ConfigureAwait(false);
+    }
+
     private static async Task<string> GetValApiVersionAsync()
     {
-        var request = new RestRequest("/version");
-        var response = await Client.ExecuteGetAsync<VapiVersionResponse>(request).ConfigureAwait(false);
+        var response = await Fetch<VapiVersionResponse>("/version");
         return !response.IsSuccessful ? null : response.Data.Data.BuildDate;
     }
 
@@ -165,8 +169,7 @@ public static class ValApi
 
             async Task UpdateMapsDictionary()
             {
-                var mapsRequest = new RestRequest(_mapsInfo.Url);
-                var mapsResponse = await Client.ExecuteGetAsync<ValApiMapsResponse>(mapsRequest).ConfigureAwait(false);
+                var mapsResponse = await Fetch<ValApiMapsResponse>(_mapsInfo.Url);
                 if (mapsResponse.IsSuccessful)
                 {
                     Dictionary<string, ValMap> mapsDictionary = new();
@@ -197,8 +200,7 @@ public static class ValApi
 
             async Task UpdateAgentsDictionary()
             {
-                var agentsRequest = new RestRequest(_agentsInfo.Url);
-                var agentsResponse = await Client.ExecuteGetAsync<ValApiAgentsResponse>(agentsRequest).ConfigureAwait(false);
+                var agentsResponse = await Fetch<ValApiAgentsResponse>(_agentsInfo.Url);
                 if (agentsResponse.IsSuccessful)
                 {
                     Dictionary<Guid, string> agentsDictionary = new();
@@ -227,8 +229,7 @@ public static class ValApi
 
             async Task UpdateSkinsDictionary()
             {
-                var skinsRequest = new RestRequest(_skinsInfo.Url);
-                var skinsResponse = await Client.ExecuteGetAsync<ValApiSkinsResponse>(skinsRequest).ConfigureAwait(false);
+                var skinsResponse = await Fetch<ValApiSkinsResponse>(_skinsInfo.Url);
                 if (skinsResponse.IsSuccessful)
                 {
                     Dictionary<Guid, ValNameImage> skinsDictionary = new();
@@ -245,8 +246,7 @@ public static class ValApi
 
             async Task UpdateCardsDictionary()
             {
-                var cardsRequest = new RestRequest(_cardsInfo.Url);
-                var cardsResponse = await Client.ExecuteGetAsync<ValApiCardsResponse>(cardsRequest).ConfigureAwait(false);
+                var cardsResponse = await Fetch<ValApiCardsResponse>(_cardsInfo.Url);
                 if (cardsResponse.IsSuccessful)
                 {
                     Dictionary<Guid, ValCard> cardsDictionary = new();
@@ -263,8 +263,7 @@ public static class ValApi
 
             async Task UpdateSpraysDictionary()
             {
-                var spraysRequest = new RestRequest(_spraysInfo.Url);
-                var spraysResponse = await Client.ExecuteGetAsync<ValApiSpraysResponse>(spraysRequest).ConfigureAwait(false);
+                var spraysResponse = await Fetch<ValApiSpraysResponse>(_spraysInfo.Url);
                 if (spraysResponse.IsSuccessful)
                 {
                     Dictionary<Guid, ValNameImage> spraysDictionary = new();
@@ -339,8 +338,7 @@ public static class ValApi
 
             async Task UpdateGamemodeDictionary()
             {
-                var gameModeRequest = new RestRequest(_gamemodeInfo.Url);
-                var gameModeResponse = await Client.ExecuteGetAsync<ValApiGamemodeResponse>(gameModeRequest).ConfigureAwait(false);
+                var gameModeResponse = await Fetch<ValApiGamemodeResponse>(_gamemodeInfo.Url);
                 if (gameModeResponse.IsSuccessful)
                 {
                     Dictionary<Guid, string> gamemodeDictionary = new();
@@ -370,8 +368,7 @@ public static class ValApi
 
             async Task UpdatePodsDictionary()
             {
-                var podsRequest = new RestRequest(_podsInfo.Url);
-                var podsResponse = await Client.ExecuteGetAsync<ValApiLocresResponse>(podsRequest).ConfigureAwait(false);
+                var podsResponse = await Fetch<ValApiLocresResponse>(_podsInfo.Url);
                 if (podsResponse.IsSuccessful)
                 {
                     Dictionary<string, string> podsDictionary = new();
@@ -381,8 +378,7 @@ public static class ValApi
                     }
                     if (Settings.Default.Language != "en")
                     {
-                        var locresEnglishRequest = new RestRequest(_podsInfo.Url + "/../en-US");
-                        var locresEnglishREsponse = await Client.ExecuteGetAsync<ValApiLocresResponse>(locresEnglishRequest).ConfigureAwait(false);
+                        var locresEnglishREsponse = await Fetch<ValApiLocresResponse>(_podsInfo.Url + "/../en-US");
                         if (locresEnglishREsponse.Data != null && locresEnglishREsponse.Data.Data.ContainsKey("UI_GamePodStrings"))
                             locresEnglishREsponse.Data.Data["UI_GamePodStrings"].ToList().ForEach(x => podsDictionary.TryAdd(x.Key, x.Value));
                     }
