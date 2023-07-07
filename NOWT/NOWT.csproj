@@ -16,7 +16,7 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>logo.ico</ApplicationIcon>
-        <Version>1.0.4</Version>
+        <Version>1.1.0</Version>
         <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
         <StartupObject>NOWT.App</StartupObject>
         <Description>A Windows app to view player ranks and stats in a live Valorant Match</Description>
@@ -32,7 +32,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <RepositoryType>git</RepositoryType>
         <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.4</FileVersion>
+        <FileVersion>1.1.0</FileVersion>
         <Platforms>AnyCPU</Platforms>
         <Nullable>annotations</Nullable>
     </PropertyGroup>
