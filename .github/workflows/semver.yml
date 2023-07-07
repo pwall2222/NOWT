@@ -40,8 +40,8 @@ jobs:
           file_pattern: "*.csproj *.xml *.iss"
           tagging_message: ${{ steps.semver.outputs.next }}
   build:
-    needs: deploy
+    needs: bump
     uses: ./.github/workflows/build.yml
-    if: needs.deploy.outputs.current != needs.deploy.outputs.next
+    if: needs.bump.outputs.current != needs.bump.outputs.next
     with:
-      tag: ${{ needs.deploy.outputs.next }}
+      tag: ${{ needs.bump.outputs.next }}
