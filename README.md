@@ -74,7 +74,7 @@ To get the app up and running follow these simple steps.
 
 ### Installation
 
-1. Download [the latest installer](https://github.com/pwall2222/releases/latest/download/NOWT.exe)
+1. Download [the latest installer](https://github.com/pwall2222/NOWT/releases/latest/download/NOWT-Installer.exe)
 2. Run the .exe (If a blue box saying "Windows protected your PC" shows up, click `More Info` and then `Run Anyway`)
 3. Follow the steps to install NOWT
 
