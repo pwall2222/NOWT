@@ -105,7 +105,7 @@
 			        HorizontalAlignment="Center"
 			        RenderOptions.BitmapScalingMode="HighQuality"
 			        Click="ImageClickAsync"
-			        Tag="https://waiua.sonel.dev">
+			        Tag="https://github.com/pwall2222/NOWT/">
 				<Image Source="/Assets/logo.png" />
 				<Button.Effect>
 					<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
