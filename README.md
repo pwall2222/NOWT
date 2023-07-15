@@ -11,7 +11,7 @@
     <p align="center">
     <img alt="GitHub" src="https://img.shields.io/github/license/pwall2222/NOWT?color=blue">
     <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/pwall2222/NOWT/total?color=blue">
-    <a href="https://github.com/pwall2222/NOWT/releases/latest/download/NOWT.exe">
+    <a href="https://github.com/pwall2222/NOWT/releases/latest/download/NOWT-Installer.exe">
       <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/pwall2222/NOWT">
     </a>
     </p>
