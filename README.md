@@ -6,16 +6,18 @@
 <h3 align="center">NOWT</h3>
 <h4 align="center">New Opponent Who This?</h4>
 
+<p align="center">
+  A Windows application to view player ranks and other info in a live Valorant Match</p>
   <p align="center">
-    A Windows application to view player ranks and other info in a live Valorant Match</p>
-    <p align="center">
     <img alt="GitHub" src="https://img.shields.io/github/license/pwall2222/NOWT?color=blue">
     <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/pwall2222/NOWT/total?color=blue">
     <a href="https://github.com/pwall2222/NOWT/releases/latest/download/NOWT-Installer.exe">
       <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/pwall2222/NOWT">
     </a>
-    </p>
-  <br />
+  </p>
+</p>
+
+<br />
 
 <details open="open">
   <summary>Table of Contents</summary>
