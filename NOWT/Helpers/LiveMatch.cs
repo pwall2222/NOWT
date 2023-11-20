@@ -133,7 +133,7 @@ public class LiveMatch
             player.IdentityData = cardTask.Result;
             player.RankData = historyTask.Result;
             player.PlayerUiData = presenceTask.Result;
-            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
+            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, false).ConfigureAwait(false);
             player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
             player.TeamId = "Blue";
             player.Active = Visibility.Visible;
@@ -162,7 +162,7 @@ public class LiveMatch
             player.RankData = playerTask.Result;
             player.SkinData = skinTask.Result;
             player.PlayerUiData = presenceTask.Result;
-            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
+            player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, riotPlayer.PlayerIdentity.Incognito, false).ConfigureAwait(false);
             player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
             player.TeamId = riotPlayer.TeamId;
             player.Active = Visibility.Visible;
@@ -312,7 +312,7 @@ public class LiveMatch
             PartyColour = "Transparent",
             Puuid = riotPlayer.PlayerIdentity.Subject
         };
-        player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, false, player.PlayerUiData.PartyUuid).ConfigureAwait(false);
+        player.IgnData = await GetIgcUsernameAsync(riotPlayer.Subject, false, true).ConfigureAwait(false);
         player.AccountLevel = !riotPlayer.PlayerIdentity.HideAccountLevel ? riotPlayer.PlayerIdentity.AccountLevel.ToString() : "-";
         player.TeamId = "Blue";
         player.Active = Visibility.Visible;
@@ -346,13 +346,13 @@ public class LiveMatch
         return playerList;
     }
 
-    private static async Task<IgnData> GetIgcUsernameAsync(Guid puuid, bool isIncognito, Guid partyId)
+    private static async Task<IgnData> GetIgcUsernameAsync(Guid puuid, bool isIncognito, bool inParty)
     {
         IgnData ignData = new();
         ignData.TrackerEnabled = Visibility.Hidden;
         ignData.TrackerDisabled = Visibility.Visible;
 
-        if (isIncognito && partyId != Constants.PPartyId)
+        if (isIncognito && !inParty)
         {
             ignData.Username = "----";
             return ignData;
@@ -876,6 +876,9 @@ public class LiveMatch
             }
 
             MatchInfo.GameModeImage = new Uri(Constants.LocalAppDataPath + $"\\ValAPI\\gamemodeimg\\{gameModeId}.png");
+        }
+        catch (InvalidOperationException) {
+            return playerUiData;
         }
         catch (Exception e)
         {
