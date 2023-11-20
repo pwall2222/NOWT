@@ -148,7 +148,7 @@ public static class Login
     }
 
     public static async Task<RestResponse> DoCachedRequestAsync(Method method, string url, bool addRiotAuth,
-        bool bypassCache = false)
+        bool bypassCache = false, bool displayError = true)
     {
         var attemptCache = method == Method.Get && !bypassCache;
         if (attemptCache)
@@ -162,7 +162,7 @@ public static class Login
         }
 
         var response = await client.ExecuteAsync(request, method).ConfigureAwait(false);
-        if (!response.IsSuccessful)
+        if (!response.IsSuccessful && displayError)
         {
             Constants.Log.Error("Request to {url} Failed: {e}", url, response.ErrorException);
             return response;

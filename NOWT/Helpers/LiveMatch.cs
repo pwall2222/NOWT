@@ -751,7 +751,7 @@ public class LiveMatch
         {
             var encodedUsername = Uri.EscapeDataString(username);
             var url = new Uri("https://tracker.gg/valorant/profile/riot/" + encodedUsername);
-            var response = await DoCachedRequestAsync(Method.Get, url.ToString(), false).ConfigureAwait(false);
+            var response = await DoCachedRequestAsync(Method.Get, url.ToString(), false, false, false).ConfigureAwait(false);
             var numericStatusCode = (short)response.StatusCode;
             if (numericStatusCode == 200) return url;
         }
