@@ -10,27 +10,33 @@ namespace NOWT.Controls;
 
 public partial class PlayerControl : UserControl
 {
-    public static readonly DependencyProperty PlayerProperty =
-        DependencyProperty.Register("PlayerCell", typeof(Player), typeof(PlayerControl), new PropertyMetadata(new Player()));
+    public static readonly DependencyProperty PlayerProperty = DependencyProperty.Register(
+        "PlayerCell",
+        typeof(Player),
+        typeof(PlayerControl),
+        new PropertyMetadata(new Player())
+    );
 
     public PlayerControl()
     {
         InitializeComponent();
-        AddHandler(InventoryControl.CloseButtonEvent,
-            new RoutedEventHandler(ClosePopupEventHandlerMethod));
+        AddHandler(
+            InventoryControl.CloseButtonEvent,
+            new RoutedEventHandler(ClosePopupEventHandlerMethod)
+        );
     }
 
     public Player PlayerCell
     {
-        get => (Player) GetValue(PlayerProperty);
+        get => (Player)GetValue(PlayerProperty);
         set => SetValue(PlayerProperty, value);
     }
 
     private void HandleLinkClick(object sender, RequestNavigateEventArgs e)
     {
-        var hl = (Hyperlink) sender;
+        var hl = (Hyperlink)sender;
         var navigateUri = hl.NavigateUri.ToString();
-        Process.Start(new ProcessStartInfo(navigateUri) {UseShellExecute = true});
+        Process.Start(new ProcessStartInfo(navigateUri) { UseShellExecute = true });
         e.Handled = true;
     }
 
@@ -46,8 +52,7 @@ public partial class PlayerControl : UserControl
         e.Handled = true;
     }
 
-    private void ClosePopupEventHandlerMethod(object sender,
-        RoutedEventArgs e)
+    private void ClosePopupEventHandlerMethod(object sender, RoutedEventArgs e)
     {
         popup.IsOpen = false;
         e.Handled = true;

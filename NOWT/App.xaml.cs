@@ -22,7 +22,10 @@ public partial class App : Application
     {
         Dispatcher.UnhandledException += OnDispatcherUnhandledException;
 
-        WindowPlace = new WindowPlace(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NOWT\\placement.config");
+        WindowPlace = new WindowPlace(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                + "\\NOWT\\placement.config"
+        );
 
         if (string.IsNullOrEmpty(Settings.Default.Language))
         {
@@ -41,9 +44,16 @@ public partial class App : Application
 
     public WindowPlace WindowPlace { get; }
 
-    private static void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    private static void OnDispatcherUnhandledException(
+        object sender,
+        DispatcherUnhandledExceptionEventArgs e
+    )
     {
-        Constants.Log.Error("Unhandled Exception: {Message}, {Stacktrace}", e.Exception.Message, e.Exception.StackTrace);
+        Constants.Log.Error(
+            "Unhandled Exception: {Message}, {Stacktrace}",
+            e.Exception.Message,
+            e.Exception.StackTrace
+        );
         e.Handled = true;
     }
 
@@ -51,11 +61,24 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        Constants.LocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NOWT";
-        Constants.Log = new LoggerConfiguration().MinimumLevel.Debug()
-            .WriteTo.Async(a => a.File(Constants.LocalAppDataPath + "\\logs\\log.txt", shared: true, rollingInterval: RollingInterval.Day))
+        var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        var update_url =
+            "https://raw.githubusercontent.com/pwall2222/NOWT/main/NOWT/VersionInfo.xml";
+
+        Constants.LocalAppDataPath =
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\NOWT";
+        Constants.Log = new LoggerConfiguration().MinimumLevel
+            .Debug()
+            .WriteTo.Async(
+                a =>
+                    a.File(
+                        Constants.LocalAppDataPath + "\\logs\\log.txt",
+                        shared: true,
+                        rollingInterval: RollingInterval.Day
+                    )
+            )
             .CreateLogger();
-        Constants.Log.Information("Application Start. Version: {Version}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        Constants.Log.Information("Application Start. Version: {Version}", version);
 
         CheckAndUpdateJsonAsync().ConfigureAwait(false);
 
@@ -69,11 +92,12 @@ public partial class App : Application
                 .AddTransient<SettingsViewModel>()
                 .AddSingleton<MainViewModel>()
                 .AddSingleton<IViewFactory>(conventionViewFactory)
-                .BuildServiceProvider());
+                .BuildServiceProvider()
+        );
 
         AutoUpdater.ShowSkipButton = false;
         AutoUpdater.InstalledVersion = new Version(System.Windows.Forms.Application.ProductVersion);
-        AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/main/NOWT/VersionInfo.xml");
+        AutoUpdater.Start(update_url);
 
         MainWindow = new MainWindow();
         MainWindow.Show();

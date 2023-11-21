@@ -14,14 +14,27 @@ public partial class MatchViewModel : ObservableObject
 {
     public delegate void EventAction();
 
-    [ObservableProperty] private int _countdownTime = 80;
-    [ObservableProperty] private DispatcherTimer _countTimer;
-    [ObservableProperty] private List<Player> _leftPlayerList;
-    [ObservableProperty] private MatchDetails _match;
-    [ObservableProperty] private LoadingOverlay _overlay;
-    [ObservableProperty] private string _refreshTime = "-";
+    [ObservableProperty]
+    private int _countdownTime = 80;
+
+    [ObservableProperty]
+    private DispatcherTimer _countTimer;
+
+    [ObservableProperty]
+    private List<Player> _leftPlayerList;
+
+    [ObservableProperty]
+    private MatchDetails _match;
+
+    [ObservableProperty]
+    private LoadingOverlay _overlay;
+
+    [ObservableProperty]
+    private string _refreshTime = "-";
     private int _resettime = 80;
-    [ObservableProperty] private List<Player> _rightPlayerList;
+
+    [ObservableProperty]
+    private List<Player> _rightPlayerList;
 
     public MatchViewModel()
     {
@@ -46,7 +59,8 @@ public partial class MatchViewModel : ObservableObject
     [ICommand]
     private void PassiveLoadAsync()
     {
-        if (!_countTimer.IsEnabled) _countTimer.Start();
+        if (!_countTimer.IsEnabled)
+            _countTimer.Start();
     }
 
     [ICommand]
@@ -95,7 +109,9 @@ public partial class MatchViewModel : ObservableObject
             {
                 var AllPlayers = new List<Player>();
                 Overlay.Content = "Getting Player Details";
-                AllPlayers = await newLiveMatch.LiveMatchOutputAsync(UpdatePercentage).ConfigureAwait(false);
+                AllPlayers = await newLiveMatch
+                    .LiveMatchOutputAsync(UpdatePercentage)
+                    .ConfigureAwait(false);
 
                 if (newLiveMatch.Status != "PREGAME")
                 {
@@ -159,11 +175,15 @@ public partial class MatchViewModel : ObservableObject
     {
         // List<Task> tasks = new();
         var AllPlayers = LeftPlayerList.Concat(RightPlayerList).ToList();
-        foreach (var player in AllPlayers) {
-            if (player.PlayerUiData is null) continue;
+        foreach (var player in AllPlayers)
+        {
+            if (player.PlayerUiData is null)
+                continue;
             // var t1 = LiveMatch.GetMatchHistoryAsync(player.PlayerUiData.Puuid);
             // player.MatchHistoryData = t1.Result;
-            player.MatchHistoryData = await LiveMatch.GetMatchHistoryAsync(player.PlayerUiData.Puuid).ConfigureAwait(false);
+            player.MatchHistoryData = await LiveMatch
+                .GetMatchHistoryAsync(player.PlayerUiData.Puuid)
+                .ConfigureAwait(false);
         }
     }
 

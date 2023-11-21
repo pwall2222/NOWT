@@ -31,7 +31,9 @@ public partial class Settings : UserControl
         AuthStatusBox.Text = Properties.Resources.Refreshing;
         if (!await Checks.CheckLoginAsync().ConfigureAwait(false))
             AuthStatusBox.Text = Properties.Resources.AuthStatusFail;
-        else AuthStatusBox.Text = $"{Properties.Resources.AuthStatusAuthAs} {await GetNameServiceGetUsernameAsync(Constants.Ppuuid).ConfigureAwait(false)}";
+        else
+            AuthStatusBox.Text =
+                $"{Properties.Resources.AuthStatusAuthAs} {await GetNameServiceGetUsernameAsync(Constants.Ppuuid).ConfigureAwait(false)}";
     }
 
     private async void Button_Click1Async(object sender, RoutedEventArgs e)
@@ -40,7 +42,9 @@ public partial class Settings : UserControl
         CurrentVersion.Text = ProductVersion;
         LatestVersion.Text = await GetLatestVersionAsync().ConfigureAwait(false);
         AutoUpdater.InstalledVersion = new Version(ProductVersion);
-        AutoUpdater.Start("https://raw.githubusercontent.com/pwall2222/NOWT/main/NOWT/VersionInfo.xml");
+        AutoUpdater.Start(
+            "https://raw.githubusercontent.com/pwall2222/NOWT/main/NOWT/VersionInfo.xml"
+        );
         await CheckAndUpdateJsonAsync().ConfigureAwait(false);
     }
 
@@ -88,7 +92,7 @@ public partial class Settings : UserControl
 
     private void ListBox_SelectedAsync(object sender, SelectionChangedEventArgs e)
     {
-        var combo = (ComboBox) sender;
+        var combo = (ComboBox)sender;
         var index = combo.SelectedIndex;
         Thread.CurrentThread.CurrentCulture = _languageList[index];
         Thread.CurrentThread.CurrentUICulture = _languageList[index];
@@ -107,15 +111,14 @@ public partial class Settings : UserControl
         foreach (var culture in cultures)
             try
             {
-                if (culture.Equals(CultureInfo.InvariantCulture)) continue;
+                if (culture.Equals(CultureInfo.InvariantCulture))
+                    continue;
 
                 var rs = rm.GetResourceSet(culture, true, false);
                 if (rs != null)
                     result.Add(culture);
             }
-            catch (CultureNotFoundException)
-            {
-            }
+            catch (CultureNotFoundException) { }
 
         rm.ReleaseAllResources();
         return Task.FromResult<IEnumerable<CultureInfo>>(result);

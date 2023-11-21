@@ -12,7 +12,6 @@ public partial class Home : UserControl
     public static ImageAwesome AccountStatus;
     public static ImageAwesome MatchStatus;
 
-
     public Home()
     {
         InitializeComponent();
@@ -23,15 +22,16 @@ public partial class Home : UserControl
         MatchStatus = MatchStatusView;
     }
 
-
     private void DataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
     {
-        if (e.NewValue is not HomeViewModel viewModel) return;
+        if (e.NewValue is not HomeViewModel viewModel)
+            return;
         viewModel.GoMatchEvent += () =>
         {
             Dispatcher.Invoke(() =>
             {
-                if (GoMatch.Command.CanExecute(null)) GoMatch.Command.Execute(null);
+                if (GoMatch.Command.CanExecute(null))
+                    GoMatch.Command.Execute(null);
             });
         };
     }

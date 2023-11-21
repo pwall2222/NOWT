@@ -19,13 +19,15 @@ public partial class Match : UserControl
     {
         var viewModel = e.NewValue as MatchViewModel;
 
-        if (viewModel == null) return;
+        if (viewModel == null)
+            return;
 
         viewModel.GoHomeEvent += () =>
         {
             Dispatcher.Invoke(() =>
             {
-                if (GoHome.Command.CanExecute(null)) GoHome.Command.Execute(null);
+                if (GoHome.Command.CanExecute(null))
+                    GoHome.Command.Execute(null);
             });
         };
     }

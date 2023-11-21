@@ -2,6 +2,4 @@
 
 namespace NOWT.ViewModels;
 
-public class SettingsViewModel : ObservableObject
-{
-}
+public class SettingsViewModel : ObservableObject { }

@@ -6,7 +6,8 @@ namespace NOWT.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty] private ObservableObject? _selectedViewModel;
+    [ObservableProperty]
+    private ObservableObject? _selectedViewModel;
 
     public MainViewModel()
     {

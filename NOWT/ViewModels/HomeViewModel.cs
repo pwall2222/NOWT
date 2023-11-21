@@ -18,11 +18,18 @@ public partial class HomeViewModel : ObservableObject
 {
     public delegate void EventAction();
 
-    [ObservableProperty] private int _countdownTime = 20;
-    [ObservableProperty] private DispatcherTimer _countTimer;
+    [ObservableProperty]
+    private int _countdownTime = 20;
+
+    [ObservableProperty]
+    private DispatcherTimer _countTimer;
     private int _cycle = 3;
-    [ObservableProperty] private List<Player> _playerList;
-    [ObservableProperty] private string _refreshTime = "-";
+
+    [ObservableProperty]
+    private List<Player> _playerList;
+
+    [ObservableProperty]
+    private string _refreshTime = "-";
 
     public HomeViewModel()
     {
@@ -43,7 +50,8 @@ public partial class HomeViewModel : ObservableObject
     [ICommand]
     private void PassiveLoadAsync()
     {
-        if (!_countTimer.IsEnabled) _countTimer.Start();
+        if (!_countTimer.IsEnabled)
+            _countTimer.Start();
     }
 
     [ICommand]
@@ -63,7 +71,6 @@ public partial class HomeViewModel : ObservableObject
         RefreshTime = "-";
     }
 
-
     private async void UpdateTimersAsync(object sender, EventArgs e)
     {
         RefreshTime = CountdownTime + "s";
@@ -75,7 +82,6 @@ public partial class HomeViewModel : ObservableObject
 
         CountdownTime--;
     }
-
 
     [ICommand]
     private async Task UpdateChecksAsync(bool forcePartyUpdate)
@@ -102,14 +108,18 @@ public partial class HomeViewModel : ObservableObject
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Home.AccountStatus.Icon = EFontAwesomeIcon.Solid_Check;
-                    Home.AccountStatus.Foreground = new SolidColorBrush(Color.FromRgb(50, 226, 178));
+                    Home.AccountStatus.Foreground = new SolidColorBrush(
+                        Color.FromRgb(50, 226, 178)
+                    );
                 });
                 if (await Checks.CheckMatchAsync().ConfigureAwait(false))
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         Home.MatchStatus.Icon = EFontAwesomeIcon.Solid_Check;
-                        Home.MatchStatus.Foreground = new SolidColorBrush(Color.FromRgb(50, 226, 178));
+                        Home.MatchStatus.Foreground = new SolidColorBrush(
+                            Color.FromRgb(50, 226, 178)
+                        );
                     });
                     CountTimer?.Stop();
                     GoMatchEvent?.Invoke();
@@ -119,7 +129,9 @@ public partial class HomeViewModel : ObservableObject
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         Home.MatchStatus.Icon = EFontAwesomeIcon.Solid_Xmark;
-                        Home.MatchStatus.Foreground = new SolidColorBrush(Color.FromRgb(255, 70, 84));
+                        Home.MatchStatus.Foreground = new SolidColorBrush(
+                            Color.FromRgb(255, 70, 84)
+                        );
                     });
                     if (forcePartyUpdate)
                     {
@@ -147,14 +159,18 @@ public partial class HomeViewModel : ObservableObject
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         Home.AccountStatus.Icon = EFontAwesomeIcon.Solid_Check;
-                        Home.AccountStatus.Foreground = new SolidColorBrush(Color.FromRgb(50, 226, 178));
+                        Home.AccountStatus.Foreground = new SolidColorBrush(
+                            Color.FromRgb(50, 226, 178)
+                        );
                     });
                     if (await Checks.CheckMatchAsync().ConfigureAwait(false))
                     {
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             Home.MatchStatus.Icon = EFontAwesomeIcon.Solid_Check;
-                            Home.MatchStatus.Foreground = new SolidColorBrush(Color.FromRgb(50, 226, 178));
+                            Home.MatchStatus.Foreground = new SolidColorBrush(
+                                Color.FromRgb(50, 226, 178)
+                            );
                         });
                         CountTimer?.Stop();
                         GoMatchEvent?.Invoke();
@@ -164,7 +180,9 @@ public partial class HomeViewModel : ObservableObject
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             Home.MatchStatus.Icon = EFontAwesomeIcon.Solid_Xmark;
-                            Home.MatchStatus.Foreground = new SolidColorBrush(Color.FromRgb(255, 70, 84));
+                            Home.MatchStatus.Foreground = new SolidColorBrush(
+                                Color.FromRgb(255, 70, 84)
+                            );
                         });
                         if (forcePartyUpdate)
                         {
@@ -188,9 +206,13 @@ public partial class HomeViewModel : ObservableObject
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         Home.AccountStatus.Icon = EFontAwesomeIcon.Solid_Xmark;
-                        Home.AccountStatus.Foreground = new SolidColorBrush(Color.FromRgb(255, 70, 84));
+                        Home.AccountStatus.Foreground = new SolidColorBrush(
+                            Color.FromRgb(255, 70, 84)
+                        );
                         Home.MatchStatus.Icon = EFontAwesomeIcon.Solid_Xmark;
-                        Home.MatchStatus.Foreground = new SolidColorBrush(Color.FromRgb(255, 70, 84));
+                        Home.MatchStatus.Foreground = new SolidColorBrush(
+                            Color.FromRgb(255, 70, 84)
+                        );
                     });
                 }
             }

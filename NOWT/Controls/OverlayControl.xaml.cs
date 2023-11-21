@@ -10,8 +10,12 @@ namespace NOWT.Controls;
 /// </summary>
 public partial class OverlayControl : UserControl
 {
-    public static readonly DependencyProperty OverlayProperty =
-        DependencyProperty.Register("Overlay", typeof(LoadingOverlay), typeof(OverlayControl), new PropertyMetadata(new LoadingOverlay()));
+    public static readonly DependencyProperty OverlayProperty = DependencyProperty.Register(
+        "Overlay",
+        typeof(LoadingOverlay),
+        typeof(OverlayControl),
+        new PropertyMetadata(new LoadingOverlay())
+    );
 
     public OverlayControl()
     {
@@ -20,14 +24,14 @@ public partial class OverlayControl : UserControl
 
     public LoadingOverlay Overlay
     {
-        get => (LoadingOverlay) GetValue(OverlayProperty);
+        get => (LoadingOverlay)GetValue(OverlayProperty);
         set => SetValue(OverlayProperty, value);
     }
 
     private void ImageClickAsync(object sender, RoutedEventArgs e)
     {
-        var button = (Button) sender;
-        Process.Start(new ProcessStartInfo(button.Tag.ToString()) {UseShellExecute = true});
+        var button = (Button)sender;
+        Process.Start(new ProcessStartInfo(button.Tag.ToString()) { UseShellExecute = true });
         e.Handled = true;
     }
 }

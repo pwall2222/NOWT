@@ -15,16 +15,16 @@ public partial class Info : UserControl
 
     private void HandleLinkClickAsync(object sender, RequestNavigateEventArgs e)
     {
-        var link = (Hyperlink) sender;
+        var link = (Hyperlink)sender;
         var navigateUri = link.NavigateUri.ToString();
-        Process.Start(new ProcessStartInfo(navigateUri) {UseShellExecute = true});
+        Process.Start(new ProcessStartInfo(navigateUri) { UseShellExecute = true });
         e.Handled = true;
     }
 
     private void ImageClickAsync(object sender, RoutedEventArgs e)
     {
-        var button = (Button) sender;
-        Process.Start(new ProcessStartInfo(button.Tag.ToString()) {UseShellExecute = true});
+        var button = (Button)sender;
+        Process.Start(new ProcessStartInfo(button.Tag.ToString()) { UseShellExecute = true });
         e.Handled = true;
     }
 }

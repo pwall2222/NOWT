@@ -2,6 +2,4 @@
 
 namespace NOWT.ViewModels;
 
-internal class InfoViewModel : ObservableObject
-{
-}
+internal class InfoViewModel : ObservableObject { }

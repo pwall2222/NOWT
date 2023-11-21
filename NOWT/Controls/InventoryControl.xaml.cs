@@ -6,15 +6,26 @@ namespace NOWT.Controls;
 
 public partial class InventoryControl : UserControl
 {
-    public static readonly DependencyProperty SkinDataProperty =
-        DependencyProperty.Register("SkinDataObject", typeof(SkinData), typeof(InventoryControl), new PropertyMetadata(new SkinData()));
+    public static readonly DependencyProperty SkinDataProperty = DependencyProperty.Register(
+        "SkinDataObject",
+        typeof(SkinData),
+        typeof(InventoryControl),
+        new PropertyMetadata(new SkinData())
+    );
 
-    public static readonly DependencyProperty UsernameProperty =
-        DependencyProperty.Register("Username", typeof(string), typeof(InventoryControl), new PropertyMetadata(null));
+    public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register(
+        "Username",
+        typeof(string),
+        typeof(InventoryControl),
+        new PropertyMetadata(null)
+    );
 
-    public static readonly RoutedEvent CloseButtonEvent =
-        EventManager.RegisterRoutedEvent("SettingConfirmedEvent", RoutingStrategy.Bubble,
-            typeof(RoutedEventHandler), typeof(InventoryControl));
+    public static readonly RoutedEvent CloseButtonEvent = EventManager.RegisterRoutedEvent(
+        "SettingConfirmedEvent",
+        RoutingStrategy.Bubble,
+        typeof(RoutedEventHandler),
+        typeof(InventoryControl)
+    );
 
     public InventoryControl(SkinData skinData, string username)
     {
@@ -25,13 +36,13 @@ public partial class InventoryControl : UserControl
 
     public SkinData SkinDataObject
     {
-        get => (SkinData) GetValue(SkinDataProperty);
+        get => (SkinData)GetValue(SkinDataProperty);
         set => SetValue(SkinDataProperty, value);
     }
 
     public string Username
     {
-        get => (string) GetValue(UsernameProperty);
+        get => (string)GetValue(UsernameProperty);
         set => SetValue(UsernameProperty, value);
     }
 

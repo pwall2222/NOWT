@@ -6,9 +6,12 @@ namespace NOWT;
 
 public class ViewModelPresenter : ContentControl
 {
-    public static readonly DependencyProperty ViewModelProperty =
-        DependencyProperty.Register("ViewModel", typeof(object), typeof(ViewModelPresenter),
-            new PropertyMetadata(null, OnViewModelChanged));
+    public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
+        "ViewModel",
+        typeof(object),
+        typeof(ViewModelPresenter),
+        new PropertyMetadata(null, OnViewModelChanged)
+    );
 
     public ViewModelPresenter()
     {
@@ -22,9 +25,12 @@ public class ViewModelPresenter : ContentControl
         set => SetValue(ViewModelProperty, value);
     }
 
-    private static void OnViewModelChanged(DependencyObject changedObject, DependencyPropertyChangedEventArgs args)
+    private static void OnViewModelChanged(
+        DependencyObject changedObject,
+        DependencyPropertyChangedEventArgs args
+    )
     {
-        var contentControl = (ViewModelPresenter) changedObject;
+        var contentControl = (ViewModelPresenter)changedObject;
         contentControl.RefreshContentPresenter();
     }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 
 namespace NOWT;
+
 // public class MappingViewFactory : IViewFactory
 // {
 //     private readonly Dictionary<Type, Type> _mapping = new();
@@ -36,10 +37,13 @@ public class NamingConventionViewFactory : IViewFactory
         var viewName = vmName.Contains("Page")
             ? vmName.Replace("PageViewModel", "View")
             : vmName.Replace("ViewModel", "");
-        var viewType = typeof(App).Assembly.DefinedTypes.Where(x => x.Name == viewName).FirstOrDefault();
-        if (viewType == null) return null;
+        var viewType = typeof(App).Assembly.DefinedTypes
+            .Where(x => x.Name == viewName)
+            .FirstOrDefault();
+        if (viewType == null)
+            return null;
 
         var view = Activator.CreateInstance(viewType);
-        return (FrameworkElement?) view;
+        return (FrameworkElement?)view;
     }
 }
