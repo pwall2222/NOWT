@@ -51,7 +51,7 @@ Source: "WebView2Loader.dll"; DestDir: "{app}"; DestName: "WebView2Loader.dll"; 
 [Icons]
 Name: "{group}\{#MyAppSetupName}"; Filename: "{app}\NOWT.exe"
 Name: "{group}\{cm:UninstallProgram,{#MyAppSetupName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppSetupName}"; Filename: "{app}\NOWT.exe"; Tasks: desktopicon
+Name: "{userdesktop}\{#MyAppSetupName}"; Filename: "{app}\NOWT.exe"; Tasks: desktopicon
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; Flags: unchecked
