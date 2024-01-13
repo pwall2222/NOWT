@@ -56,9 +56,4 @@ public partial class InventoryControl : UserControl
     {
         RaiseEvent(new RoutedEventArgs(CloseButtonEvent));
     }
-
-    private void InventoryEntryControl_Loaded(object sender, RoutedEventArgs e)
-    {
-
-    }
 }

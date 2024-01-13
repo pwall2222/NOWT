@@ -127,7 +127,7 @@ public partial class SkinData
 
     [ObservableProperty]
     private string _marshalName;
-    
+
     [ObservableProperty]
     private Uri _outlawImage;
 
