@@ -192,7 +192,13 @@ public partial class SkinData
     private Uri _spray3Image;
 
     [ObservableProperty]
-    private string _spray3Name;
+    private string _spray3Name;    
+    
+    [ObservableProperty]
+    private Uri _spray4Image;
+
+    [ObservableProperty]
+    private string _spray4Name;
 
     [ObservableProperty]
     private Uri _stingerImage;
