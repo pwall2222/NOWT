@@ -88,7 +88,7 @@ To get the app up and running follow these simple steps.
 
 ## Roadmap and Known Bugs
 
-Please check the [issues tab](https://github.com/pwall2222/NOWT/issues) before making a new issue. My [Discord Server](https://discord.gg/X7CYCeZSRK) has a list of known bugs and upcoming features.
+Please check the [issues tab](https://github.com/pwall2222/NOWT/issues) before making a new issue.
 
 ## Built With
 
