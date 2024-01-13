@@ -809,6 +809,20 @@ public class LiveMatch
                     .Item
                     .Id
             ].Name,
+            OutlawImage = skins[
+                loadout.Items["5f0aaf7a-4289-3998-d5ff-eb9a5cf7ef5c"].Sockets[
+                    "3ad1b2b2-acdb-4524-852f-954a76ddae0a"
+                ]
+                    .Item
+                    .Id
+            ].Image,
+            OutlawName = skins[
+                loadout.Items["5f0aaf7a-4289-3998-d5ff-eb9a5cf7ef5c"].Sockets[
+                    "3ad1b2b2-acdb-4524-852f-954a76ddae0a"
+                ]
+                    .Item
+                    .Id
+            ].Name,
             OperatorImage = skins[
                 loadout.Items["a03b24d3-4319-996d-0f8c-94bbfba1dfc7"].Sockets[
                     "3ad1b2b2-acdb-4524-852f-954a76ddae0a"

@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="NOWT.Controls.InventoryControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:NOWT.Controls"
-             xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
-             x:Name="Self" HorizontalAlignment="Stretch"
-             mc:Ignorable="d" Background="Transparent"
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignData SkinData}">
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:controls="clr-namespace:NOWT.Controls"
+	xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
+	x:Name="Self" HorizontalAlignment="Stretch"
+	mc:Ignorable="d" Background="Transparent"
+	d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignData SkinData}">
 	<Border Background="#252A40" CornerRadius="20" Margin="10" Padding="10">
 		<Border.Effect>
 			<DropShadowEffect BlurRadius="5" ShadowDepth="3" />
@@ -29,17 +29,10 @@
 				<RowDefinition />
 			</Grid.RowDefinitions>
 
-			<TextBlock Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" Text="{Binding Username, ElementName=Self}"
-			           FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"
-			           VerticalAlignment="Center" Margin="10" />
-
-			<!-- <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="6" Width="Auto"> -->
-			<!-- 	<Grid.RowDefinitions> -->
-			<!-- 		<RowDefinition Height="Auto"></RowDefinition> -->
-			<!-- 		<RowDefinition SharedSizeGroup="A"></RowDefinition> -->
-			<!-- 		<RowDefinition SharedSizeGroup="A"></RowDefinition> -->
-			<!-- 		<RowDefinition SharedSizeGroup="A"></RowDefinition> -->
-			<!-- 	</Grid.RowDefinitions> -->
+			<TextBlock Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0"
+				Text="{Binding Username, ElementName=Self}"
+				FontSize="30" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"
+				VerticalAlignment="Center" Margin="10" />
 
 			<controls:InventoryEntryControl
 				Grid.Row="0" Grid.RowSpan="3"
@@ -57,8 +50,6 @@
 				Grid.Row="5"
 				Image="{Binding SkinDataObject.Spray3Image, ElementName=Self}"
 				TooltipName="{Binding SkinDataObject.Spray3Name, ElementName=Self}" />
-			<!-- </Grid> -->
-
 
 			<controls:InventoryEntryControl
 				Grid.Column="1" Grid.Row="1"
@@ -116,31 +107,41 @@
 				TooltipName="{Binding SkinDataObject.VandalName, ElementName=Self}" />
 
 			<controls:InventoryEntryControl
-				Grid.Column="4" Grid.Row="1"
+				Grid.Column="4" Grid.Row="0"
 				Image="{Binding SkinDataObject.MarshalImage, ElementName=Self}"
 				TooltipName="{Binding SkinDataObject.MarshalName, ElementName=Self}" />
+
+			<controls:InventoryEntryControl
+				Grid.Column="4" Grid.Row="1"
+				Image="{Binding SkinDataObject.OutlawImage, ElementName=Self}"
+				TooltipName="{Binding SkinDataObject.OutlawName, ElementName=Self}" />
+
 			<controls:InventoryEntryControl
 				Grid.Column="4" Grid.Row="2"
 				Image="{Binding SkinDataObject.OperatorImage, ElementName=Self}"
 				TooltipName="{Binding SkinDataObject.OperatorName, ElementName=Self}" />
+
 			<controls:InventoryEntryControl
 				Grid.Column="4" Grid.Row="3"
 				Image="{Binding SkinDataObject.AresImage, ElementName=Self}"
 				TooltipName="{Binding SkinDataObject.AresName, ElementName=Self}" />
+
 			<controls:InventoryEntryControl
 				Grid.Column="4" Grid.Row="4"
 				Image="{Binding SkinDataObject.OdinImage, ElementName=Self}"
 				TooltipName="{Binding SkinDataObject.OdinName, ElementName=Self}" />
+
 			<controls:InventoryEntryControl
 				Grid.Column="4" Grid.Row="5"
 				Image="{Binding SkinDataObject.MeleeImage, ElementName=Self}"
 				TooltipName="{Binding SkinDataObject.MeleeName, ElementName=Self}" />
 
 			<Button
-				Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Cursor="Hand" Click="CloseBtnClick"
+				Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Cursor="Hand" Click="CloseBtnClick"
 				Template="{StaticResource ButtonTemplate}" Margin="10" Padding="20">
 				<fa6:ImageAwesome PrimaryColor="#007EF9" Icon="Solid_Xmark" Margin="10" />
 			</Button>
+
 		</Grid>
 	</Border>
 </UserControl>
