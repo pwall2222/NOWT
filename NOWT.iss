@@ -3,7 +3,7 @@
 
 [Setup]
 #define MyAppSetupName 'NOWT'
-#define MyAppVersion '1.2.0'
+#define MyAppVersion '1.3.0'
 #define MyAppPublisher 'PWall'
 #define MyAppCopyright 'Soneliem & PWall'
 #define MyAppURL 'https://github.com/pwall2222/NOWT'
