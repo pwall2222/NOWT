@@ -1140,7 +1140,8 @@ public class LiveMatch
                     url.ToString(),
                     false,
                     false,
-                    false
+                    false,
+                    true
                 )
                 .ConfigureAwait(false);
             var numericStatusCode = (short)response.StatusCode;

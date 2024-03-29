@@ -172,7 +172,8 @@ public static class Login
         string url,
         bool addRiotAuth,
         bool bypassCache = false,
-        bool displayError = true
+        bool displayError = true,
+        bool userAgentTrickery = false
     )
     {
         var attemptCache = method == Method.Get && !bypassCache;
@@ -180,6 +181,12 @@ public static class Login
             if (Constants.UrlToBody.TryGetValue(url, out var res))
                 return res;
         var client = new RestClient(url);
+
+        if (userAgentTrickery)
+        {
+            client.AddDefaultHeader("User-Agent", "Mozilla/5.0");
+        }
+
         var request = new RestRequest();
         if (addRiotAuth)
         {
