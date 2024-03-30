@@ -1134,19 +1134,22 @@ public class LiveMatch
         try
         {
             var encodedUsername = Uri.EscapeDataString(username);
-            var url = new Uri("https://tracker.gg/valorant/profile/riot/" + encodedUsername);
+            var url = new Uri(
+                "https://api.tracker.network/api/v2/valorant/standard/profile/riot/"
+                    + encodedUsername
+            );
             var response = await DoCachedRequestAsync(
                     Method.Get,
                     url.ToString(),
                     false,
                     false,
                     false,
-                    true
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OverwolfClient/0.190.0.13"
                 )
                 .ConfigureAwait(false);
             var numericStatusCode = (short)response.StatusCode;
             if (numericStatusCode == 200)
-                return url;
+                return new Uri("https://tracker.gg/valorant/profile/riot/" + encodedUsername);
         }
         catch (Exception e)
         {
