@@ -14,11 +14,13 @@ public class Checks
             return false;
         var client = new RestClient(
             $"https://pd.{Constants.Region}.a.pvp.net/account-xp/v1/players/{Constants.Ppuuid}"
-        );
+        ); 
 
         var request = new RestRequest()
             .AddHeader("Authorization", $"Bearer {Constants.AccessToken}")
-            .AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken);
+            .AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken)
+            .AddHeader("X-Riot-ClientPlatform", Constants.Platform)
+            .AddHeader("X-Riot-ClientVersion", Constants.Version);
         var response = await client.ExecuteGetAsync(request).ConfigureAwait(false);
         if (response.IsSuccessful)
             return true;
@@ -68,6 +70,8 @@ public class Checks
         var request = new RestRequest();
         request.AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken);
         request.AddHeader("Authorization", $"Bearer {Constants.AccessToken}");
+        request.AddHeader("X-Riot-ClientPlatform", Constants.Platform);
+        request.AddHeader("X-Riot-ClientVersion", Constants.Version);
         var response = await client.ExecuteGetAsync(request).ConfigureAwait(false);
         if (response.IsSuccessful)
             return true;
