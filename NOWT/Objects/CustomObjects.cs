@@ -247,15 +247,24 @@ public class ValMap
 
 public class ValCard
 {
-    public string Name { get; set; }
-    public Uri Image { get; set; }
-    public Uri FullImage { get; set; }
+    public string Name { get; set; } = "Undefined";
+    public Uri Image { get; set; } =
+        new Uri(
+            "https://media.valorant-api.com/sprays/472693f9-4d87-416b-9def-3fbe2d310cc0/displayicon.png"
+        );
+    public Uri FullImage { get; set; } =
+        new Uri(
+            "https://media.valorant-api.com/sprays/472693f9-4d87-416b-9def-3fbe2d310cc0/displayicon.png"
+        );
 }
 
 public class ValNameImage
 {
-    public string Name { get; set; }
-    public Uri Image { get; set; }
+    public string Name { get; set; } = "Undefined";
+    public Uri Image { get; set; } =
+        new Uri(
+            "https://media.valorant-api.com/sprays/472693f9-4d87-416b-9def-3fbe2d310cc0/displayicon.png"
+        );
 }
 
 [INotifyPropertyChanged]

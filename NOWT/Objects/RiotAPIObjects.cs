@@ -394,7 +394,7 @@ public class LoadoutElement
 
 public class LoadoutLoadout
 {
-    [JsonPropertyName("Sprays")]
+    [JsonPropertyName("Expressions")]
     public Sprays Sprays { get; set; }
 
     [JsonPropertyName("Items")]
@@ -433,20 +433,17 @@ public class SocketItem
 
 public class Sprays
 {
-    [JsonPropertyName("SpraySelections")]
+    [JsonPropertyName("AESSelections")]
     public SpraySelection[] SpraySelections { get; set; }
 }
 
 public class SpraySelection
 {
-    [JsonPropertyName("SocketID")]
-    public Guid SocketId { get; set; }
+    [JsonPropertyName("AssetID")]
+    public Guid AssetId { get; set; }
 
-    [JsonPropertyName("SprayID")]
-    public Guid SprayId { get; set; }
-
-    [JsonPropertyName("LevelID")]
-    public Guid LevelId { get; set; }
+    [JsonPropertyName("TypeID")]
+    public Guid TypeId { get; set; }
 }
 
 public class CompetitiveUpdatesResponse

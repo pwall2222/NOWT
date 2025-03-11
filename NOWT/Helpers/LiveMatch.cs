@@ -611,19 +611,38 @@ public class LiveMatch
             Constants.Log.Error("GetSkinInfoAsync failed: {e}", e);
         }
 
+        ValNameImage defNI = new();
+        ValCard defCard = new();
+        ValCard card = SafeDict.GetValue(cards, cardid, defCard);
         var skinData = new SkinData
         {
-            CardImage = cards[cardid].Image,
-            LargeCardImage = cards[cardid].FullImage,
-            CardName = cards[cardid].Name,
-            Spray1Image = sprays[loadout.Sprays.SpraySelections[0].SprayId].Image,
-            Spray1Name = sprays[loadout.Sprays.SpraySelections[0].SprayId].Name,
-            Spray2Image = sprays[loadout.Sprays.SpraySelections[1].SprayId].Image,
-            Spray2Name = sprays[loadout.Sprays.SpraySelections[1].SprayId].Name,
-            Spray3Image = sprays[loadout.Sprays.SpraySelections[2].SprayId].Image,
-            Spray3Name = sprays[loadout.Sprays.SpraySelections[2].SprayId].Name,
-            Spray4Image = sprays[loadout.Sprays.SpraySelections[3].SprayId].Image,
-            Spray4Name = sprays[loadout.Sprays.SpraySelections[3].SprayId].Name,
+            CardImage = card.Image,
+            LargeCardImage = card.FullImage,
+            CardName = card.Name,
+            Spray1Image = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[0].AssetId, defNI)
+                .Image,
+            Spray1Name = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[0].AssetId, defNI)
+                .Name,
+            Spray2Image = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[1].AssetId, defNI)
+                .Image,
+            Spray2Name = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[1].AssetId, defNI)
+                .Name,
+            Spray3Image = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[2].AssetId, defNI)
+                .Image,
+            Spray3Name = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[2].AssetId, defNI)
+                .Name,
+            Spray4Image = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[3].AssetId, defNI)
+                .Image,
+            Spray4Name = SafeDict
+                .GetValue(sprays, loadout.Sprays.SpraySelections[3].AssetId, defNI)
+                .Name,
             ClassicImage = skins[
                 loadout.Items["29a0cfab-485b-f5d5-779a-b59f85e204a8"].Sockets[
                     "3ad1b2b2-acdb-4524-852f-954a76ddae0a"
