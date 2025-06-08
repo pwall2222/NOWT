@@ -1,11 +1,11 @@
-﻿using System;
+﻿using NOWT.Objects;
+using RestSharp;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using RestSharp;
-using NOWT.Objects;
 
 namespace NOWT.Helpers;
 
@@ -71,9 +71,9 @@ public static class Login
 
         foreach (
             var parts in from session in response.Data.ExtensionData
-            select session.Value.Deserialize<ExternalSessions>() into game
-            where game is { ProductId: "valorant" }
-            select game.LaunchConfiguration.Arguments[4].Split('=', '&')
+                         select session.Value.Deserialize<ExternalSessions>() into game
+                         where game is { ProductId: "valorant" }
+                         select game.LaunchConfiguration.Arguments[4].Split('=', '&')
         )
         {
             switch (parts[1])

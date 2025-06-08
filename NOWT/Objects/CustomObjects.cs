@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Windows;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace NOWT.Objects;
 

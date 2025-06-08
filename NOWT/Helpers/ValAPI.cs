@@ -1,12 +1,12 @@
-﻿using System;
+﻿using NOWT.Objects;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
-using RestSharp;
-using NOWT.Objects;
 using Settings = NOWT.Properties.Settings;
 
 namespace NOWT.Helpers;
@@ -373,25 +373,25 @@ public static class ValApi
                             or 2:
                                 continue;
                             case 0:
-                            {
-                                // File.Copy(Directory.GetCurrentDirectory() + "\\Assets\\0.png",
-                                //     Constants.LocalAppDataPath + "\\ValAPI\\ranksimg\\0.png", true);
-
-                                const string imagePath = "pack://application:,,,/Assets/0.png";
-                                var imageInfo = Application.GetResourceStream(new Uri(imagePath));
-                                using var ms = new MemoryStream();
-                                if (imageInfo != null)
                                 {
-                                    await imageInfo.Stream.CopyToAsync(ms);
-                                    var imageBytes = ms.ToArray();
-                                    await File.WriteAllBytesAsync(
-                                        Constants.LocalAppDataPath + "\\ValAPI\\ranksimg\\0.png",
-                                        imageBytes
-                                    );
-                                }
+                                    // File.Copy(Directory.GetCurrentDirectory() + "\\Assets\\0.png",
+                                    //     Constants.LocalAppDataPath + "\\ValAPI\\ranksimg\\0.png", true);
 
-                                continue;
-                            }
+                                    const string imagePath = "pack://application:,,,/Assets/0.png";
+                                    var imageInfo = Application.GetResourceStream(new Uri(imagePath));
+                                    using var ms = new MemoryStream();
+                                    if (imageInfo != null)
+                                    {
+                                        await imageInfo.Stream.CopyToAsync(ms);
+                                        var imageBytes = ms.ToArray();
+                                        await File.WriteAllBytesAsync(
+                                            Constants.LocalAppDataPath + "\\ValAPI\\ranksimg\\0.png",
+                                            imageBytes
+                                        );
+                                    }
+
+                                    continue;
+                                }
                         }
 
                         var fileName =

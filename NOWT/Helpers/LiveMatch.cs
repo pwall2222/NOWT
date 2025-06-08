@@ -1,4 +1,8 @@
-﻿using System;
+﻿using NOWT.Objects;
+using NOWT.Properties;
+using RestSharp;
+using RestSharp.Serializers.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,10 +12,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
-using RestSharp;
-using RestSharp.Serializers.Json;
-using NOWT.Objects;
-using NOWT.Properties;
 using static NOWT.Helpers.Login;
 
 namespace NOWT.Helpers;

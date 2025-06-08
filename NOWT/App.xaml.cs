@@ -1,17 +1,17 @@
-﻿using System;
+﻿using AutoUpdaterDotNET;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using NOWT.Helpers;
+using NOWT.Properties;
+using NOWT.ViewModels;
+using RestoreWindowPlace;
+using Serilog;
+using System;
 using System.Globalization;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using AutoUpdaterDotNET;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using RestoreWindowPlace;
-using Serilog;
-using NOWT.Helpers;
-using NOWT.Properties;
-using NOWT.ViewModels;
 using static NOWT.Helpers.ValApi;
 
 namespace NOWT;

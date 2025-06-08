@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using NOWT.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
-using NOWT.ViewModels;
 
 namespace NOWT.Views;
 

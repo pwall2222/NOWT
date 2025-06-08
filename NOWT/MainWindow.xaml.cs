@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using NOWT.ViewModels;
+using System.Windows;
 
 namespace NOWT;
 
