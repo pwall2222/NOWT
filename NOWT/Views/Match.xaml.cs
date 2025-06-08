@@ -13,6 +13,7 @@ public partial class Match : UserControl
     {
         InitializeComponent();
         DataContextChanged += DataContextChangedHandler;
+
     }
 
     private void DataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)

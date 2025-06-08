@@ -18,6 +18,7 @@ namespace NOWT.Helpers;
 
 public class LiveMatch
 {
+
     public delegate void UpdateProgress(int percentage);
 
     public MatchDetails MatchInfo { get; } = new();
@@ -27,11 +28,17 @@ public class LiveMatch
     public string QueueId { get; set; }
     public string Status { get; set; }
 
+    public bool ShowTrackerProfile
+    {
+        get => Properties.Settings.Default.AlwaysShowTrackerProfile;
+    }
+
     private static async Task<bool> CheckAndSetLiveMatchIdAsync()
     {
+
         var client = new RestClient(
-            $"https://glz-{Constants.Shard}-1.{Constants.Region}.a.pvp.net/core-game/v1/players/{Constants.Ppuuid}"
-        );
+                $"https://glz-{Constants.Shard}-1.{Constants.Region}.a.pvp.net/core-game/v1/players/{Constants.Ppuuid}"
+            );
         var request = new RestRequest();
         request.AddHeader("X-Riot-Entitlements-JWT", Constants.EntitlementToken);
         request.AddHeader("Authorization", $"Bearer {Constants.AccessToken}");
@@ -1166,17 +1173,7 @@ public class LiveMatch
                 "https://api.tracker.network/api/v2/valorant/standard/profile/riot/"
                     + encodedUsername
             );
-            var response = await DoCachedRequestAsync(
-                    Method.Get,
-                    url.ToString(),
-                    false,
-                    false,
-                    false,
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OverwolfClient/0.190.0.13"
-                )
-                .ConfigureAwait(false);
-            var numericStatusCode = (short)response.StatusCode;
-            if (numericStatusCode == 200)
+            if (Properties.Settings.Default.AlwaysShowTrackerProfile)
                 return new Uri("https://tracker.gg/valorant/profile/riot/" + encodedUsername);
         }
         catch (Exception e)
