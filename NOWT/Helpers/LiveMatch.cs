@@ -303,18 +303,6 @@ public class LiveMatch
         return await GetLiveMatchDetailsAsync().ConfigureAwait(false);
     }
 
-    private void SetServer(dynamic matchIdInfo)
-    {
-        var gamePodId = matchIdInfo.GamePodId;
-        var pods = JsonSerializer.Deserialize<Dictionary<string, string>>(
-            File.ReadAllText(Constants.LocalAppDataPath + "\\ValAPI\\gamepods.json")
-        );
-        var nameAvailable = pods.TryGetValue(gamePodId, out string serverName);
-        if (!nameAvailable)
-            return;
-        MatchInfo.Server = "🌍 " + serverName;
-    }
-
     private async Task GetPlayers(
         UpdateProgress updateProgress,
         List<Task<Player>> playerTasks,
@@ -327,8 +315,6 @@ public class LiveMatch
 
         if (matchIdInfo == null)
             return;
-
-        SetServer(matchIdInfo);
 
         if (Stage == "pre")
         {

@@ -281,9 +281,6 @@ public partial class MatchDetails
 
     [ObservableProperty]
     private Uri _mapImage;
-
-    [ObservableProperty]
-    private string _server;
 }
 
 [INotifyPropertyChanged]

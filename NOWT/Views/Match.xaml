@@ -119,9 +119,6 @@
 					<TextBlock FontFamily="{StaticResource Nunito}" FontSize="25" FontWeight="SemiBold" Margin="10"
 					           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
 					           Text="{Binding Path=Match.GameMode}" />
-					<TextBlock FontFamily="{StaticResource Nunito}" FontSize="25" FontWeight="SemiBold" Margin="10"
-					           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
-					           Text="{Binding Path=Match.Server}" />
 				</StackPanel>
 
 

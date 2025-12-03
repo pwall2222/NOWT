@@ -135,12 +135,6 @@ public static class ValApi
             Filepath = Constants.LocalAppDataPath + "\\ValAPI\\gamemode.json",
             Url = $"/gamemodes?language={language}"
         };
-        _podsInfo = new Urls
-        {
-            Name = "Gamepods",
-            Filepath = Constants.LocalAppDataPath + "\\ValAPI\\gamepods.json",
-            Url = $"../internal/locres/{language}"
-        };
         _allInfo = new List<Urls>
         {
             _mapsInfo,
@@ -449,46 +443,6 @@ public static class ValApi
                 await File.WriteAllTextAsync(
                         _gamemodeInfo.Filepath,
                         JsonSerializer.Serialize(gamemodeDictionary)
-                    )
-                    .ConfigureAwait(false);
-            }
-
-            async Task UpdatePodsDictionary()
-            {
-                var podsResponse = await Fetch<ValApiLocresResponse>(_podsInfo.Url);
-                if (!podsResponse.IsSuccessful)
-                {
-                    Constants.Log.Error(
-                        "updatePodsDictionary Failed, Response:{error}",
-                        podsResponse.ErrorException
-                    );
-                    return;
-                }
-                Dictionary<string, string> podsDictionary = new();
-                if (
-                    podsResponse.Data != null
-                    && podsResponse.Data.Data.ContainsKey("UI_GamePodStrings")
-                )
-                {
-                    podsDictionary = podsResponse.Data.Data["UI_GamePodStrings"];
-                }
-                if (Settings.Default.Language != "en")
-                {
-                    var locresEnglishREsponse = await Fetch<ValApiLocresResponse>(
-                        _podsInfo.Url + "/../en-US"
-                    );
-                    if (
-                        locresEnglishREsponse.Data != null
-                        && locresEnglishREsponse.Data.Data.ContainsKey("UI_GamePodStrings")
-                    )
-                        locresEnglishREsponse.Data.Data["UI_GamePodStrings"]
-                            .ToList()
-                            .ForEach(x => podsDictionary.TryAdd(x.Key, x.Value));
-                }
-
-                await File.WriteAllTextAsync(
-                        _podsInfo.Filepath,
-                        JsonSerializer.Serialize(podsDictionary)
                     )
                     .ConfigureAwait(false);
             }
