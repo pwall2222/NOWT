@@ -24,7 +24,6 @@ public static class ValApi
     private static Urls _cardsInfo;
     private static Urls _spraysInfo;
     private static Urls _gamemodeInfo;
-    private static Urls _podsInfo;
     private static List<Urls> _allInfo;
 
     private static readonly Dictionary<string, string> ValApiLanguages =
@@ -144,8 +143,7 @@ public static class ValApi
             _skinsInfo,
             _cardsInfo,
             _spraysInfo,
-            _gamemodeInfo,
-            _podsInfo
+            _gamemodeInfo
         };
         return Task.CompletedTask;
     }
@@ -457,8 +455,7 @@ public static class ValApi
                         UpdateSkinsDictionary(),
                         UpdateCardsDictionary(),
                         UpdateSpraysDictionary(),
-                        UpdateGamemodeDictionary(),
-                        UpdatePodsDictionary()
+                        UpdateGamemodeDictionary()
                     )
                     .ConfigureAwait(false);
             }
