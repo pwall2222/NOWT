@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AutoUpdaterDotNET;
+using NOWT.Helpers;
+using NOWT.Properties;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
 using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,9 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
-using AutoUpdaterDotNET;
-using NOWT.Helpers;
-using NOWT.Properties;
 using static NOWT.Helpers.Login;
 using static NOWT.Helpers.ValApi;
 
@@ -135,5 +134,17 @@ public partial class Settings : UserControl
             }
 
         Mouse.OverrideCursor = Cursors.Arrow;
+    }
+
+    private void TrackerToggle_Checked(object sender, RoutedEventArgs e)
+    {
+        Properties.Settings.Default.AlwaysShowTrackerProfile = true;
+        Properties.Settings.Default.Save();
+    }
+
+    private void TrackerToggle_Unchecked(object sender, RoutedEventArgs e)
+    {
+        Properties.Settings.Default.AlwaysShowTrackerProfile = false;
+        Properties.Settings.Default.Save();
     }
 }

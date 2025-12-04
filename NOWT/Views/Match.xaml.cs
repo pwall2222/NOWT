@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using NOWT.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
-using NOWT.ViewModels;
 
 namespace NOWT.Views;
 
@@ -13,6 +13,7 @@ public partial class Match : UserControl
     {
         InitializeComponent();
         DataContextChanged += DataContextChangedHandler;
+
     }
 
     private void DataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using RestSharp;
 
 namespace NOWT.Helpers;
 
@@ -14,7 +14,7 @@ public class Checks
             return false;
         var client = new RestClient(
             $"https://pd.{Constants.Region}.a.pvp.net/account-xp/v1/players/{Constants.Ppuuid}"
-        ); 
+        );
 
         var request = new RestRequest()
             .AddHeader("Authorization", $"Bearer {Constants.AccessToken}")

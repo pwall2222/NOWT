@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
+﻿using NOWT.Objects;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using NOWT.Objects;
 
 namespace NOWT.Controls;
 

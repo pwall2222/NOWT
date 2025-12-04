@@ -232,12 +232,15 @@
     <value>Refreshing In:</value>
   </data>
   <data name="Player" xml:space="preserve">
-	  <value>Player</value>
+    <value>Player</value>
   </data>
   <data name="HighScore" xml:space="preserve">
-	  <value>High Score:</value>
+    <value>High Score:</value>
   </data>
   <data name="Score" xml:space="preserve">
-	  <value>Score:</value>
+    <value>Score:</value>
+  </data>
+  <data name="AlwaysShowTrackerProfile" xml:space="preserve">
+    <value>Always show tracker.gg profile link</value>
   </data>
 </root>

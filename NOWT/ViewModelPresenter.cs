@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace NOWT;
 

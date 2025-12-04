@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using FontAwesome6.Fonts;
+using NOWT.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using FontAwesome6.Fonts;
-using NOWT.ViewModels;
 
 namespace NOWT.Views;
 

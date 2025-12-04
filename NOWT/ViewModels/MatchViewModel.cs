@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
+using NOWT.Helpers;
+using NOWT.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using NOWT.Helpers;
-using NOWT.Objects;
 
 namespace NOWT.ViewModels;
 
